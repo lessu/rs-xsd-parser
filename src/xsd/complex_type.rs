@@ -1,5 +1,5 @@
 use yaserde::*;
-
+use crate::xsd::default_fn::*;
 use crate::xsd::{
     group::Group,
     attribute::Attribute,
@@ -20,8 +20,8 @@ use crate::xsd::{
     namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
 pub struct ComplexType {
-    #[yaserde(attribute)]
-    pub abstract_: Option<bool>,
+    #[yaserde(attribute,default = "default_false")]
+    pub abstract_: bool,
 
     #[yaserde(attribute, rename = "block")]
     pub block: Option<String>,
@@ -38,8 +38,8 @@ pub struct ComplexType {
     #[yaserde(attribute)]
     pub name: Option<String>,
 
-    #[yaserde(attribute, rename = "defaultAttributesApply")]
-    pub default_attributes_apply: Option<bool>,
+    #[yaserde(attribute, rename = "defaultAttributesApply", default = "default_true")]
+    pub default_attributes_apply: bool,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

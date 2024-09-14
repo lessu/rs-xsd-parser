@@ -8,8 +8,10 @@ use yaserde::*;
 pub struct Import {
   #[yaserde(attribute)]
   pub id: Option<String>,
+
   #[yaserde(attribute)]
   pub namespace: Option<String>,
+  
   #[yaserde(rename = "schemaLocation", attribute)]
   pub schema_location: Option<String>,
 }

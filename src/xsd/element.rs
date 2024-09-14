@@ -1,4 +1,5 @@
 use yaserde::*;
+use crate::xsd::default_fn::*;
 
 use crate::xsd::{
     type_def::Alternative,
@@ -10,7 +11,6 @@ use crate::xsd::{
     complex_type::ComplexType,
     simple_type::SimpleType
 };
-
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "element",
@@ -18,8 +18,8 @@ use crate::xsd::{
     namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
 pub struct Element {
-    #[yaserde(attribute)]
-    pub abstract_: Option<bool>,
+    #[yaserde(attribute,default = "default_false")]
+    pub abstract_: bool,
 
     #[yaserde(attribute, rename = "block")]
     pub block: Option<String>,
@@ -39,17 +39,17 @@ pub struct Element {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "maxOccurs", default = "default_u32_1")]
+    pub max_occurs: u32,
 
-    #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1")]
+    pub min_occurs: u32,
 
     #[yaserde(attribute)]
     pub name: Option<String>,
 
-    #[yaserde(attribute)]
-    pub nillable: Option<bool>,
+    #[yaserde(attribute,default = "default_false")]
+    pub nillable: bool,
 
     #[yaserde(attribute, rename = "ref")]
     pub ref_: Option<String>,

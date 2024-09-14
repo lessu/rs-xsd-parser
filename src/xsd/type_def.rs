@@ -1,10 +1,14 @@
+use std::ffi::c_float;
+use crate::xsd::default_fn::*;
+
 use yaserde::*;
 use crate::xsd::{
     simple_type::SimpleType,
     complex_type::ComplexType,
+    any::Any,
+    annotation::Annotation
 };
 
-use crate::xsd::annotation::Annotation;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -187,13 +191,13 @@ pub enum Form {
 
 #[derive(Clone, Debug, Default, PartialEq, YaDeserialize)]
 pub enum ProcessContents {
-    #[default]
     #[yaserde(rename = "lax")]
     Lax,
 
     #[yaserde(rename = "skip")]
     Skip,
 
+    #[default]
     #[yaserde(rename = "strict")]
     Strict,
 }
@@ -219,47 +223,319 @@ pub struct Restriction {
     pub simple_type: Vec<SimpleType>,
 
     #[yaserde(rename = "minExclusive")]
-    pub min_exclusive: Vec<String>,
+    pub min_exclusive: Vec<MinExclusive>,
 
     #[yaserde(rename = "minInclusive")]
-    pub min_inclusive: Vec<String>,
+    pub min_inclusive: Vec<MinInclusive>,
 
     #[yaserde(rename = "maxExclusive")]
-    pub max_exclusive: Vec<String>,
+    pub max_exclusive: Vec<MaxExclusive>,
 
     #[yaserde(rename = "maxInclusive")]
-    pub max_inclusive: Vec<String>,
+    pub max_inclusive: Vec<MaxInclusive>,
 
     #[yaserde(rename = "totalDigits")]
-    pub total_digits: Vec<u32>,
+    pub total_digits: Vec<TotalDigits>,
 
     #[yaserde(rename = "fractionDigits")]
-    pub fraction_digits: Vec<String>,
+    pub fraction_digits: Vec<FractionDigits>,
 
     #[yaserde(rename = "length")]
-    pub length: Vec<u32>,
+    pub length: Vec<Length>,
 
     #[yaserde(rename = "minLength")]
-    pub min_length: Vec<u32>,
+    pub min_length: Vec<MinLength>,
 
     #[yaserde(rename = "maxLength")]
-    pub max_length: Vec<u32>,
+    pub max_length: Vec<MaxLength>,
 
     #[yaserde(rename = "enumeration")]
-    pub enumeration: Vec<String>,
+    pub enumeration: Vec<Enumeration>,
 
     #[yaserde(rename = "whiteSpace")]
-    pub white_space: Vec<String>,
+    pub white_space: Vec<WhiteSpace>,
 
     #[yaserde(rename = "pattern")]
-    pub pattern: Vec<String>,
+    pub pattern: Vec<Pattern>,
 
     #[yaserde(rename = "assertion")]
-    pub assertion: Vec<String>,
+    pub assertion: Vec<Assertion>,
 
     #[yaserde(rename = "explicitTimezone")]
-    pub explicit_timezone: Vec<String>,
+    pub explicit_timezone: Vec<ExplicitTimezone>,
 
     #[yaserde(rename = "any")]
-    pub any: Vec<String>,
+    pub any: Vec<Any>,
+}
+
+
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "minExclusive",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MinExclusive {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<f32>, // anySimpleType，使用 String 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "minInclusive",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MinInclusive {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<f32>, // anySimpleType，使用 String 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "maxExclusive",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MaxExclusive {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<f32>, // anySimpleType，使用 String 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "maxInclusive",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MaxInclusive {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<f32>, // anySimpleType，使用 String 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "totalDigits",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct TotalDigits {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<u32>, // positiveInteger，使用 u32 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "fractionDigits",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct FractionDigits {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "length",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Length {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "minLength",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MinLength {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "maxLength",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct MaxLength {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "enumeration",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Enumeration {
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "whiteSpace",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct WhiteSpace {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,// 默认值为 false
+    
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "pattern",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Pattern {
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "assertion",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Assertion {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+
+    #[yaserde(attribute)]
+    pub test: Option<String>, 
+    
+    #[yaserde(attribute,rename="xpathDefaultNamespace")]
+    pub xpath_default_namespace: Option<String>, 
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+}
+
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "explicitTimezone",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct ExplicitTimezone {
+    #[yaserde(attribute,default = "default_false")]
+    pub fixed: bool,
+    
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub value: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
 }

@@ -17,6 +17,7 @@ mod xsd_context;
 mod type_def;
 mod any;
 mod open_content;
+mod default_fn;
 use std::collections::BTreeMap;
 use std::fs;
 use std::str::FromStr;

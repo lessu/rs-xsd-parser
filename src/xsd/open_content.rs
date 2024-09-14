@@ -21,7 +21,7 @@ pub struct OpenContent {
     pub annotation: Option<Annotation>,
 
     #[yaserde(rename = "any")]
-    pub any: Option<Any>, // 处理可选的 any 类型
+    pub any: Option<Any>,
 }
 
 #[derive(Clone, Debug, Default, PartialEq, YaDeserialize)]

@@ -1,9 +1,12 @@
 use yaserde::*;
+use crate::xsd::default_fn::*;
 
 use crate::xsd::{
     annotation::Annotation,
     type_def::ProcessContents
 };
+
+use super::max_occurences::MaxOccurences;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -15,11 +18,11 @@ pub struct Any {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "maxOccurs", default)]
+    pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1" )]
+    pub min_occurs: u32,
 
     #[yaserde(attribute)]
     pub namespace: Option<String>,
@@ -30,8 +33,8 @@ pub struct Any {
     #[yaserde(attribute, rename = "notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute, rename = "processContents")]
-    pub process_contents: Option<ProcessContents>,
+    #[yaserde(attribute, rename = "processContents",default)]
+    pub process_contents: ProcessContents,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

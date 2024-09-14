@@ -25,8 +25,8 @@ pub struct AnyAttribute {
     #[yaserde(attribute, rename = "notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute, rename = "processContents")]
-    pub process_contents: Option<ProcessContents>,
+    #[yaserde(attribute, rename = "processContents",default)]
+    pub process_contents: ProcessContents,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

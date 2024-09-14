@@ -1,4 +1,5 @@
 use yaserde::*;
+use crate::xsd::default_fn::*;
 
 use crate::xsd::{
     annotation::Annotation,
@@ -6,6 +7,8 @@ use crate::xsd::{
     element::Element,
     group::Group,
 };
+
+use super::max_occurences::MaxOccurences;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -17,11 +20,11 @@ pub struct All {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "maxOccurs", default = "default_u32_1")]
+    pub max_occurs: u32,
 
-    #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1")]
+    pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -46,11 +49,11 @@ pub struct Choice {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<String>,
+    #[yaserde(attribute, rename = "maxOccurs",default)]
+    pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "minOccurs",default = "default_u32_1")]
+    pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -81,11 +84,11 @@ pub struct Sequence {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<String>,
+    #[yaserde(attribute, rename = "maxOccurs",default = "default_max_occurs")]
+    pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>,
+    #[yaserde(attribute, rename = "minOccurs",default = "default_u32_1")]
+    pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
