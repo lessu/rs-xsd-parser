@@ -145,7 +145,7 @@ pub struct Alternative {
     pub test: Option<String>,
 
     #[yaserde(attribute,rename = "type")]
-    pub type_: Option<String>,
+    pub type_v: Option<String>,
 
     #[yaserde(attribute, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,

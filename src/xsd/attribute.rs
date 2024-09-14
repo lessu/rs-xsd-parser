@@ -32,13 +32,13 @@ pub struct Attribute {
   target_namespace: Option<String>,
 
   #[yaserde(attribute, rename = "type")]
-  pub type_: Option<String>,
+  pub type_v: Option<String>,
 
   #[yaserde(rename = "use", attribute,default)]
   pub required: Use,
 
   #[yaserde(rename = "ref", attribute)]
-  pub ref_: Option<String>,
+  pub ref_v: Option<String>,
 
   #[yaserde(rename = "simpleType", prefix = "xs")]
   pub simple_type: Option<SimpleType>,

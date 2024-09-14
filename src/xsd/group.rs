@@ -27,7 +27,7 @@ pub struct Group {
     pub name: Option<String>, // NCName
 
     #[yaserde(attribute)]
-    pub ref_: Option<String>, // QName
+    pub ref_v: Option<String>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

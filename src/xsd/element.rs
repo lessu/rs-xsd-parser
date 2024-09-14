@@ -19,7 +19,7 @@ use crate::xsd::{
 )]
 pub struct Element {
     #[yaserde(attribute,default = "default_false")]
-    pub abstract_: bool,
+    pub abstract_v: bool,
 
     #[yaserde(attribute, rename = "block")]
     pub block: Option<String>,
@@ -28,7 +28,7 @@ pub struct Element {
     pub default: Option<String>,
 
     #[yaserde(attribute, rename = "final")]
-    pub final_: Option<String>,
+    pub final_v: Option<String>,
 
     #[yaserde(attribute)]
     pub fixed: Option<String>,
@@ -52,7 +52,7 @@ pub struct Element {
     pub nillable: bool,
 
     #[yaserde(attribute, rename = "ref")]
-    pub ref_: Option<String>,
+    pub ref_v: Option<String>,
 
     #[yaserde(attribute, rename = "substitutionGroup")]
     pub substitution_group: Vec<String>,
@@ -61,7 +61,7 @@ pub struct Element {
     pub target_namespace: Option<String>,
 
     #[yaserde(attribute, rename = "type")]
-    pub type_: Option<String>,
+    pub type_v: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

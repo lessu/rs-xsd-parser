@@ -8,12 +8,10 @@ mod element;
 mod group;
 mod import;
 mod max_occurences;
-mod rust_types_mapping;
 mod schema;
 mod sequence;
 mod simple_content;
 mod simple_type;
-mod xsd_context;
 mod type_def;
 mod any;
 mod open_content;
@@ -21,15 +19,13 @@ mod default_fn;
 use std::collections::BTreeMap;
 use std::fs;
 use std::str::FromStr;
-use xsd_context::XsdContext;
 use yaserde::de::from_str;
 
 
 #[derive(Clone, Debug)]
 pub struct Xsd {
-  name: String,
-  context: XsdContext,
-  schema: schema::Schema,
+  pub name: String,
+  pub schema: schema::Schema,
 }
 
 impl Xsd {
@@ -38,13 +34,10 @@ impl Xsd {
     content: &str,
     module_namespace_mappings: &BTreeMap<String, String>,
   ) -> Result<Self, String> {
-    let context = XsdContext::new(content)?;
-    let context = context.with_module_namespace_mappings(module_namespace_mappings);
     let schema: schema::Schema = from_str(content)?;
 
     Ok(Xsd {
       name,
-      context,
       schema,
     })
   }

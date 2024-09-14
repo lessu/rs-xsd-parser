@@ -12,7 +12,7 @@ use super::type_def::Restriction;
 )]
 pub struct SimpleType {
     #[yaserde(attribute, rename = "final")]
-    pub final_: Option<String>, // 处理 #all | List of (list | union | restriction | extension)
+    pub final_v: Option<String>, // 处理 #all | List of (list | union | restriction | extension)
 
     #[yaserde(attribute)]
     pub id: Option<String>,

@@ -21,13 +21,13 @@ use crate::xsd::{
 )]
 pub struct ComplexType {
     #[yaserde(attribute,default = "default_false")]
-    pub abstract_: bool,
+    pub abstract_v: bool,
 
     #[yaserde(attribute, rename = "block")]
     pub block: Option<String>,
 
     #[yaserde(attribute, rename = "final")]
-    pub final_: Option<String>,
+    pub final_v: Option<String>,
 
     #[yaserde(attribute)]
     pub id: Option<String>,
