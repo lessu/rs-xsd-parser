@@ -5,7 +5,22 @@ use crate::xsd::{
   annotation::Annotation,
   type_def::Form
 };
-
+/**
+ * <attribute
+ *  default = string
+ *  fixed = string
+ *  form = (qualified | unqualified)
+ *  id = ID
+ *  name = NCName
+ *  ref = QName
+ *  targetNamespace = anyURI
+ *  type = QName
+ *  use = (optional | prohibited | required) : optional
+ *  inheritable = boolean
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, simpleType?)
+ *</attribute>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
   rename = "attribute",
@@ -34,7 +49,7 @@ pub struct Attribute {
   #[yaserde(attribute, rename = "type")]
   pub type_v: Option<String>,
 
-  #[yaserde(rename = "use", attribute,default)]
+  #[yaserde(rename = "use", attribute, default)]
   pub required: Use,
 
   #[yaserde(rename = "ref", attribute)]

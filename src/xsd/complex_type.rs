@@ -12,7 +12,19 @@ use crate::xsd::{
     sequence::{All, Choice, Sequence},
     simple_type::SimpleType
 };
-
+/**
+ * <complexType
+ *  abstract = boolean : false
+ *  block = (#all | List of (extension | restriction))
+ *  final = (#all | List of (extension | restriction))
+ *  id = ID
+ *  mixed = boolean
+ *  name = NCName
+ *  defaultAttributesApply = boolean : true
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, (simpleContent | complexContent | (openContent?, (group | all | choice | sequence)?, ((attribute | attributeGroup)*, anyAttribute?), assert*)))
+ * </complexType>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "complexType",
@@ -45,10 +57,10 @@ pub struct ComplexType {
     pub annotation: Option<Annotation>,
 
     #[yaserde(rename = "simpleType", prefix = "xs")]
-    simple_type: Vec<SimpleType>, // ( SimpleType | ComplexType )? due to the restriction of rust, we can't use Option<TypeDefinition>
+    simple_type: Vec<SimpleType>, // ( SimpleType | ComplexType )? due to nest referencing, we can't use Option<TypeDefinition>
 
     #[yaserde(rename = "complexType", prefix = "xs")]
-    complex_type: Vec<ComplexType>, // ( SimpleType | ComplexType )? due to the restriction of rust, we can't use Option<TypeDefinition>
+    complex_type: Vec<ComplexType>, // ( SimpleType | ComplexType )? due to nest referencing, we can't use Option<TypeDefinition>
 
     #[yaserde(rename = "simpleContent", prefix = "xs")]
     pub simple_content: Option<SimpleContent>,

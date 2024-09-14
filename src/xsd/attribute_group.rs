@@ -6,6 +6,21 @@ use crate::xsd::{
     any_attribute::AnyAttribute,
 };
 
+/**
+ * <attributeGroup
+ *   id = ID
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </attributeGroup>
+ * <attributeGroup
+ *   id = ID
+ *   name = NCName
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *   Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?))
+ * </attributeGroup>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "attributeGroup",
@@ -26,11 +41,11 @@ pub struct AttributeGroup {
     pub annotation: Option<Annotation>,
 
     #[yaserde(rename = "attribute")]
-    pub attributes: Vec<Attribute>, // 处理多个 attribute
+    pub attributes: Vec<Attribute>,
 
     #[yaserde(rename = "attributeGroup")]
-    pub attribute_groups: Vec<AttributeGroup>, // 处理多个 attributeGroup
+    pub attribute_groups: Vec<AttributeGroup>,
 
     #[yaserde(rename = "anyAttribute")]
-    pub any_attribute: Option<AnyAttribute>, // 可选的 anyAttribute
+    pub any_attribute: Option<AnyAttribute>,
 }

@@ -14,7 +14,14 @@ use crate::xsd::{
     open_content::OpenContent, 
 };
 
-
+/**
+ * <complexContent
+ *   id = ID
+ *   mixed = boolean
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (restriction | extension))
+ * </complexContent>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "complexContent",
@@ -37,6 +44,16 @@ pub struct ComplexContent {
     #[yaserde(rename = "extension")]
     pub extension: Option<Extension>,
 }
+
+
+/**
+ * <extension
+ *   base = QName
+ *   id = ID
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
+ * </extension>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "extension",

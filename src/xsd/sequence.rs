@@ -9,7 +9,15 @@ use crate::xsd::{
 };
 
 use super::max_occurences::MaxOccurences;
-
+/**
+ * <all
+ *   id = ID
+ *   maxOccurs = (0 | 1) : 1
+ *   minOccurs = (0 | 1) : 1
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (element | any | group)*)
+ * </all>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "all",
@@ -38,7 +46,15 @@ pub struct All {
     #[yaserde(rename = "group")]
     pub groups: Vec<Group>,
 }
-
+/**
+ * <choice
+ *   id = ID
+ *   maxOccurs = (nonNegativeInteger | unbounded)  : 1
+ *   minOccurs = nonNegativeInteger : 1
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (element | group | choice | sequence | any)*)
+ * </choice>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "choice",
@@ -74,6 +90,15 @@ pub struct Choice {
     pub any: Vec<Any>,
 }
 
+/**
+ * <sequence
+ *   id = ID
+ *   maxOccurs = (nonNegativeInteger | unbounded)  : 1
+ *   minOccurs = nonNegativeInteger : 1
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (element | group | choice | sequence | any)*)
+ * </sequence>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "sequence",

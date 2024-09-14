@@ -5,7 +5,13 @@ use crate::xsd::{
     type_def::Restriction,
     complex_content::Extension,
 };
-
+/**
+ * <simpleContent
+ *   id = ID
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (restriction | extension))
+ * </simpleContent> 
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "simpleContent",

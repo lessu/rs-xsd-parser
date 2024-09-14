@@ -16,7 +16,6 @@ mod type_def;
 mod any;
 mod open_content;
 mod default_fn;
-use std::collections::BTreeMap;
 use std::fs;
 use std::str::FromStr;
 use yaserde::de::from_str;
@@ -32,7 +31,6 @@ impl Xsd {
   pub fn new(
     name: String,
     content: &str,
-    module_namespace_mappings: &BTreeMap<String, String>,
   ) -> Result<Self, String> {
     let schema: schema::Schema = from_str(content)?;
 
@@ -44,8 +42,7 @@ impl Xsd {
 
   pub fn new_from_file(
     name: &str,
-    source: &str,
-    module_namespace_mappings: &BTreeMap<String, String>,
+    source: &str
   ) -> Result<Self, String> {
     let content = {
       let path = std::env::current_dir().unwrap();
@@ -61,7 +58,7 @@ impl Xsd {
       content
     };
 
-    Xsd::new(String::from_str(name).unwrap(), &content, module_namespace_mappings)
+    Xsd::new(String::from_str(name).unwrap(), &content)
   }
 
 }

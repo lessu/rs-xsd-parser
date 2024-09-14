@@ -1,4 +1,3 @@
-use std::ffi::c_float;
 use crate::xsd::default_fn::*;
 
 use yaserde::*;
@@ -9,7 +8,15 @@ use crate::xsd::{
     annotation::Annotation
 };
 
-
+/**
+ * <selector
+ *   id = ID
+ *   xpath = a subset of XPath expression, see below
+ *   xpathDefaultNamespace = (anyURI | (##defaultNamespace | ##targetNamespace | ##local))
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </selector>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "selector",
@@ -29,7 +36,15 @@ pub struct Selector {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-
+/**
+ * <field
+ *   id = ID
+ *   xpath = a subset of XPath expression, see below
+ *   xpathDefaultNamespace = (anyURI | (##defaultNamespace | ##targetNamespace | ##local))
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </field>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "field",
@@ -50,6 +65,15 @@ pub struct Field {
     pub annotation: Option<Annotation>,
 }
 
+/**
+ * <unique
+ *   id = ID
+ *   name = NCName
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (selector, field+)?)
+ * </unique>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "unique",
@@ -75,6 +99,16 @@ pub struct Unique {
     #[yaserde(rename = "field", prefix = "xs")]
     pub fields: Vec<Field>,
 }
+
+/**
+ * <key
+ *   id = ID
+ *   name = NCName
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (selector, field+)?)
+ * </key>
+ */
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -102,6 +136,16 @@ pub struct Key {
     pub fields: Vec<Field>,
 }
 
+/**
+ * <keyref
+ *   id = ID
+ *   name = NCName
+ *   ref = QName
+ *   refer = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (selector, field+)?)
+ * </keyref>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "keyref",
@@ -130,7 +174,16 @@ pub struct KeyRef {
     #[yaserde(rename = "field", prefix = "xs")]
     pub fields: Vec<Field>,
 }
-
+/**
+ * <alternative
+ *   id = ID
+ *   test = an XPath expression
+ *   type = QName
+ *   xpathDefaultNamespace = (anyURI | (##defaultNamespace | ##targetNamespace | ##local))
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (simpleType | complexType)?)
+ * </alternative>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "alternative",
@@ -159,7 +212,15 @@ pub struct Alternative {
     #[yaserde(rename = "complexType", prefix = "xs")]
     pub complex_type:Option<ComplexType>,
 }
-
+/**
+ * <assert
+ *   id = ID
+ *   test = an XPath expression
+ *   xpathDefaultNamespace = (anyURI | (##defaultNamespace | ##targetNamespace | ##local))
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </assert>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "assert",
@@ -202,7 +263,14 @@ pub enum ProcessContents {
     Strict,
 }
 
-
+/**
+ * <restriction
+ *  base = QName
+ *  id = ID
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | {any with namespace: ##other})*)?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
+ * </restriction>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "restriction",
@@ -303,7 +371,7 @@ pub struct MinInclusive {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<f32>, // anySimpleType，使用 String 处理
+    pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -341,7 +409,7 @@ pub struct MaxInclusive {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<f32>, // anySimpleType，使用 String 处理
+    pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -361,7 +429,7 @@ pub struct TotalDigits {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<u32>, // positiveInteger，使用 u32 处理
+    pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -381,7 +449,7 @@ pub struct FractionDigits {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+    pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -401,7 +469,7 @@ pub struct Length {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+    pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -421,7 +489,7 @@ pub struct MinLength {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+    pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -440,7 +508,7 @@ pub struct MaxLength {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<u32>, // nonNegativeInteger，使用 u32 处理
+    pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -471,7 +539,7 @@ pub struct Enumeration {
 )]
 pub struct WhiteSpace {
     #[yaserde(attribute,default = "default_false")]
-    pub fixed: bool,// 默认值为 false
+    pub fixed: bool,
     
     #[yaserde(attribute)]
     pub id: Option<String>,

@@ -1,5 +1,14 @@
 use yaserde::*;
 
+use crate::xsd::any::Any;
+
+/**
+ * <annotation
+ *  id = ID
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (appinfo | documentation)*
+ * </annotation>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "annotation",
@@ -17,6 +26,13 @@ pub struct Annotation {
     pub documentation: Vec<Documentation>,
 }
 
+/**
+ * <appinfo
+ *  source = anyURI
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: ({any})*
+ * </appinfo>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "appinfo",
@@ -28,9 +44,16 @@ pub struct AppInfo {
     pub source: Option<String>, // anyURI
 
     #[yaserde(rename = "any")]
-    pub content: Vec<String>, // 处理任意内容
+    pub content: Vec<Any>,
 }
-
+/**
+ * <documentation
+ *  source = anyURI
+ *  xml:lang = language
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: ({any})*
+ * </documentation>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "documentation",
@@ -45,5 +68,5 @@ pub struct Documentation {
     pub xml_lang: Option<String>, // language
 
     #[yaserde(rename = "any")]
-    pub content: Vec<String>, // 处理任意内容
+    pub content: Vec<Any>,
 }

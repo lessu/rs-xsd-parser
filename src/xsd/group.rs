@@ -6,7 +6,17 @@ use crate::xsd::{
     sequence::Choice,
     sequence::Sequence,
 };
-
+/**
+ * <group
+ *   id = ID
+ *   maxOccurs = (nonNegativeInteger | unbounded)  : 1
+ *   minOccurs = nonNegativeInteger : 1
+ *   name = NCName
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, (all | choice | sequence)?)
+ * </group>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "group",
@@ -18,10 +28,10 @@ pub struct Group {
     pub id: Option<String>,
 
     #[yaserde(attribute, rename = "maxOccurs")]
-    pub max_occurs: Option<u32>, // 处理 nonNegativeInteger 或 unbounded
+    pub max_occurs: Option<u32>,
 
     #[yaserde(attribute, rename = "minOccurs")]
-    pub min_occurs: Option<u32>, // 处理 nonNegativeInteger
+    pub min_occurs: Option<u32>, 
 
     #[yaserde(attribute)]
     pub name: Option<String>, // NCName

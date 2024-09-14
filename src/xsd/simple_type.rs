@@ -1,9 +1,19 @@
 use yaserde::*;
 
-use crate::xsd::annotation::Annotation;
+use crate::xsd::{
+    annotation::Annotation,
+    type_def::Restriction
+};
 
-use super::type_def::Restriction;
-
+/**
+ * <simpleType
+ *  final = (#all | List of (list | union | restriction | extension))
+ *  id = ID
+ *  name = NCName
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, (restriction | list | union))
+ * </simpleType>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "simpleType",
@@ -12,7 +22,7 @@ use super::type_def::Restriction;
 )]
 pub struct SimpleType {
     #[yaserde(attribute, rename = "final")]
-    pub final_v: Option<String>, // 处理 #all | List of (list | union | restriction | extension)
+    pub final_v: Option<String>,
 
     #[yaserde(attribute)]
     pub id: Option<String>,
@@ -23,6 +33,7 @@ pub struct SimpleType {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
+    /* use vec to avoid infinite recursive reference */
     #[yaserde(rename = "restriction")]
     pub restriction: Vec<Restriction>,
 
@@ -33,6 +44,14 @@ pub struct SimpleType {
     pub union: Vec<Union>,
 }
 
+/**
+ * <list
+ *  id = ID
+ *  itemType = QName
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, simpleType?)
+ *</list>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "list",
@@ -50,9 +69,16 @@ pub struct List {
     pub annotation: Option<Annotation>,
 
     #[yaserde(rename = "simpleType")]
-    pub simple_type: Vec<SimpleType>,
+    pub simple_type: Option<SimpleType>,
 }
-
+/**
+ * <union
+ *  id = ID
+ *  memberTypes = List of QName
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, simpleType*)
+ *</union>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "union",
@@ -70,5 +96,5 @@ pub struct Union {
     pub annotation: Option<Annotation>,
 
     #[yaserde(rename = "simpleType")]
-    pub simple_types: Vec<SimpleType>, // 处理多个 simpleType
+    pub simple_types: Option<SimpleType>,
 }

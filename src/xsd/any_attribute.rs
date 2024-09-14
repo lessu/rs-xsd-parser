@@ -5,7 +5,17 @@ use crate::xsd::{
     type_def::ProcessContents
 };
 
-
+/**
+ * <anyAttribute
+ *   id = ID
+ *   namespace = ((##any | ##other) | List of (anyURI | (##targetNamespace | ##local)) )
+ *   notNamespace = List of (anyURI | (##targetNamespace | ##local))
+ *   notQName = List of (QName | ##defined)
+ *   processContents = (lax | skip | strict) : strict
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </anyAttribute>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "anyAttribute",

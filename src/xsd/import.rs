@@ -1,4 +1,15 @@
 use yaserde::*;
+
+use crate::xsd::annotation::Annotation;
+/**
+ * <import
+ *  id = ID
+ *  namespace = anyURI
+ *  schemaLocation = anyURI
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?)
+ * </import>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
   root="schema"
@@ -14,4 +25,7 @@ pub struct Import {
   
   #[yaserde(rename = "schemaLocation", attribute)]
   pub schema_location: Option<String>,
+
+  #[yaserde(rename = "annotation")]
+  annotations: Vec<Annotation>
 }

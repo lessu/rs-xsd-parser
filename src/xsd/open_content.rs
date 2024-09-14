@@ -4,6 +4,14 @@ use crate::xsd::annotation::Annotation;
 
 use super::any::Any;
 
+/**
+ * <openContent
+ *   id = ID
+ *   mode = (none | interleave | suffix) : interleave
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, any?)
+ * </openContent>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "openContent",

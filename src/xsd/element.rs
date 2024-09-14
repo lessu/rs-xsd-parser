@@ -11,6 +11,27 @@ use crate::xsd::{
     complex_type::ComplexType,
     simple_type::SimpleType
 };
+/**
+ * <element
+ *  abstract = boolean : false
+ *  block = (#all | List of (extension | restriction | substitution))
+ *  default = string
+ *  final = (#all | List of (extension | restriction))
+ *  fixed = string
+ *  form = (qualified | unqualified)
+ *  id = ID
+ *  maxOccurs = (nonNegativeInteger | unbounded)  : 1
+ *  minOccurs = nonNegativeInteger : 1
+ *  name = NCName
+ *  nillable = boolean : false
+ *  ref = QName
+ *  substitutionGroup = List of QName
+ *  targetNamespace = anyURI
+ *  type = QName
+ *  {any attributes with non-schema namespace . . .}>
+ *    Content: (annotation?, ((simpleType | complexType)?, alternative*, (unique | key | keyref)*))
+ * </element>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "element",
@@ -65,7 +86,11 @@ pub struct Element {
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
-    
+
+    /* 
+     * Content: (annotation?, ((simpleType | complexType)?, alternative*, (unique | key | keyref)*))
+     * too complex so we just flattern it
+     */
     #[yaserde(rename = "simpleType", prefix = "xs")]
     pub simple_type:Option<SimpleType>,
     

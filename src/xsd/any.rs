@@ -8,6 +8,19 @@ use crate::xsd::{
 
 use super::max_occurences::MaxOccurences;
 
+/**
+ * <any
+ *   id = ID
+ *   maxOccurs = (nonNegativeInteger | unbounded)  : 1
+ *   minOccurs = nonNegativeInteger : 1
+ *   namespace = ((##any | ##other) | List of (anyURI | (##targetNamespace | ##local)) )
+ *   notNamespace = List of (anyURI | (##targetNamespace | ##local))
+ *   notQName = List of (QName | (##defined | ##definedSibling))
+ *   processContents = (lax | skip | strict) : strict
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?)
+ * </any>
+ */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "any",
