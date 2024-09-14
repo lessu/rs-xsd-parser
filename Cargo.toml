@@ -4,3 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+log = "0.4"
+xml-rs = "0.8"
+yaserde = { version = "0.11", features = ["yaserde_derive"] }
+clap = { version = "4.0", features = ["derive"] }
