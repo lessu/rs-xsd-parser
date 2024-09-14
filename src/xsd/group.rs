@@ -1,11 +1,10 @@
 use yaserde::*;
 
 use crate::xsd::{
-    annotation::Annotation,
-    sequence::All,
-    sequence::Choice,
-    sequence::Sequence,
+    annotation::Annotation, 
+    type_def::GroupComponenet
 };
+
 /**
  * <group
  *   id = ID
@@ -42,12 +41,6 @@ pub struct Group {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "all")]
-    pub all: Option<All>,
-
-    #[yaserde(rename = "choice")]
-    pub choice: Option<Choice>,
-
-    #[yaserde(rename = "sequence")]
-    pub sequence: Option<Sequence>,
+    #[yaserde(flatten)]
+    pub componenet: Option<GroupComponenet>
 }

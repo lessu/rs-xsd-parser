@@ -2,11 +2,35 @@ use crate::xsd::default_fn::*;
 
 use yaserde::*;
 use crate::xsd::{
-    simple_type::SimpleType,
-    complex_type::ComplexType,
+    types::SimpleType,
     any::Any,
-    annotation::Annotation
+    annotation::Annotation,
+    attribute::AttributeType, 
+    group::Group,
+    content::OpenContent,
+    sequence::{All, Choice, Sequence}
 };
+
+use super::element::TypeComponent;
+
+#[derive(Clone, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub enum GroupComponenet {
+    #[yaserde(rename = "All", prefix = "xs")]
+    All(All),
+    #[yaserde(rename = "Choice", prefix = "xs")]
+    Choice(Choice),
+    #[yaserde(rename = "Sequence", prefix = "xs")]
+    Sequence(Sequence),
+}
+impl Default for GroupComponenet {
+    fn default() -> Self {
+        GroupComponenet::All(All::default())
+    }
+}
 
 /**
  * <selector
@@ -206,11 +230,8 @@ pub struct Alternative {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "simpleType", prefix = "xs")]
-    pub simple_type:Option<SimpleType>,
-    
-    #[yaserde(rename = "complexType", prefix = "xs")]
-    pub complex_type:Option<ComplexType>,
+    #[yaserde(flatten)]
+    pub type_component:Option<TypeComponent>
 }
 /**
  * <assert
@@ -232,7 +253,7 @@ pub struct Assert {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub test: Option<String>, // XPath 表达式
+    pub test: Option<String>, // XPath
 
     #[yaserde(attribute, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
@@ -338,6 +359,52 @@ pub struct Restriction {
 
 
 
+/**
+ * <extension
+ *   base = QName
+ *   id = ID
+ *   {any attributes with non-schema namespace . . .}>
+ *     Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
+ * </extension>
+ */
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "extension",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Extension {
+    #[yaserde(attribute)]
+    pub base: Option<String>, // QName
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+
+    #[yaserde(rename = "openContent")]
+    pub open_content: Option<OpenContent>,
+
+    #[yaserde(rename = "group")]
+    pub group: Option<Group>,
+
+    #[yaserde(rename = "all")]
+    pub all: Option<All>,
+
+    #[yaserde(rename = "choice")]
+    pub choice: Option<Choice>,
+
+    #[yaserde(rename = "sequence")]
+    pub sequence: Option<Sequence>,
+
+    #[yaserde(flatten)]
+    pub attributes: AttributeType,
+
+    #[yaserde(rename = "assert")]
+    pub asserts: Vec<Assert>,
+}
+
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     rename = "minExclusive",
@@ -352,7 +419,7 @@ pub struct MinExclusive {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<f32>, // anySimpleType，使用 String 处理
+    pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -390,7 +457,7 @@ pub struct MaxExclusive {
     pub id: Option<String>,
 
     #[yaserde(attribute)]
-    pub value: Option<f32>, // anySimpleType，使用 String 处理
+    pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

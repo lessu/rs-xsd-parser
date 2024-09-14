@@ -6,9 +6,9 @@ use crate::xsd::{
     any::Any,
     element::Element,
     group::Group,
+    max_occurences::MaxOccurences
 };
 
-use super::max_occurences::MaxOccurences;
 /**
  * <all
  *   id = ID

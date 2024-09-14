@@ -8,9 +8,26 @@ use crate::xsd::{
     type_def::KeyRef,
     type_def::Form,
     annotation::Annotation,
-    complex_type::ComplexType,
-    simple_type::SimpleType
+    types::ComplexType,
+    types::SimpleType
 };
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub enum TypeComponent{
+    #[default]
+    None,
+
+    #[yaserde(rename = "simpleType", prefix = "xs")]
+    SimpleType(SimpleType),
+    
+    #[yaserde(rename = "complexType", prefix = "xs")]
+    ComplexType(ComplexType)
+
+}
+
 /**
  * <element
  *  abstract = boolean : false
@@ -87,15 +104,8 @@ pub struct Element {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    /* 
-     * Content: (annotation?, ((simpleType | complexType)?, alternative*, (unique | key | keyref)*))
-     * too complex so we just flattern it
-     */
-    #[yaserde(rename = "simpleType", prefix = "xs")]
-    pub simple_type:Option<SimpleType>,
-    
-    #[yaserde(rename = "complexType", prefix = "xs")]
-    pub complex_type:Option<ComplexType>,
+    #[yaserde(flatten)]
+    pub type_component: TypeComponent,
 
     #[yaserde(rename = "alternative", prefix = "xs")]
     pub alternatives: Vec<Alternative>,
