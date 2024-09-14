@@ -1,95 +1,74 @@
 use yaserde::*;
 
-use crate::xsd::{list::List, restriction::Restriction, union::Union, XsdContext};
+use crate::xsd::annotation::Annotation;
+
+use super::type_def::Restriction;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(prefix = "xs", namespace = "xs: http://www.w3.org/2001/XMLSchema")]
+#[yaserde(
+    rename = "simpleType",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
 pub struct SimpleType {
-  #[yaserde(attribute)]
-  pub name: String,
-  pub restriction: Option<Restriction>,
-  pub list: Option<List>,
-  pub union: Option<Union>,
+    #[yaserde(attribute, rename = "final")]
+    pub final_: Option<String>, // 处理 #all | List of (list | union | restriction | extension)
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(attribute)]
+    pub name: Option<String>, // NCName
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+
+    #[yaserde(rename = "restriction")]
+    pub restriction: Vec<Restriction>,
+
+    #[yaserde(rename = "list")]
+    pub list: Vec<List>,
+
+    #[yaserde(rename = "union")]
+    pub union: Vec<Union>,
 }
 
-// impl SimpleType {
-//   pub fn get_type_implementation(
-//     &self,
-//     context: &XsdContext,
-//     prefix: &Option<String>,
-//   ) -> TokenStream {
-//     if let Some(restriction) = &self.restriction {
-//       restriction.get_type_implementation(context, prefix)
-//     } else {
-//       panic!("No restriction for this simple type {:?}", self);
-//     }
-//   }
-// }
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "list",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct List {
+    #[yaserde(attribute)]
+    pub id: Option<String>,
 
-// #[cfg(test)]
-// mod tests {
-//   use super::*;
-//   use std::str::FromStr;
+    #[yaserde(attribute, rename = "itemType")]
+    pub item_type: Option<String>, // QName
 
-//   static DERIVES: &str =
-//     "# [derive (Clone , Debug , Default , PartialEq , yaserde_derive :: YaDeserialize , yaserde_derive :: YaSerialize)] ";
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
 
-//   #[test]
-//   fn simple_type() {
-//     let st = SimpleType {
-//       name: "test".to_string(),
-//       restriction: None,
-//       list: None,
-//       union: None,
-//     };
+    #[yaserde(rename = "simpleType")]
+    pub simple_type: Vec<SimpleType>,
+}
 
-//     let context =
-//       XsdContext::new(r#"<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"></xs:schema>"#)
-//         .unwrap();
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "union",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct Union {
+    #[yaserde(attribute)]
+    pub id: Option<String>,
 
-//     let implementation = st.implement(&quote!(), &None, &context);
+    #[yaserde(attribute, rename = "memberTypes")]
+    pub member_types: Vec<String>, // List of QName
 
-//     let expected = TokenStream::from_str(&format!(
-//       r#"{DERIVES}
-//         pub struct Test {{
-//           #[yaserde(text)]
-//           pub content: std::string::String,
-//         }}"#,
-//     ))
-//     .unwrap();
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
 
-//     assert_eq!(implementation.to_string(), expected.to_string());
-//   }
-
-//   // <!-- Whitespace-separated list of strings -->
-//   // <xs:simpleType name="StringVectorType">
-//   //   <xs:list itemType="xs:string"/>
-//   // </xs:simpleType>
-
-//   // <!-- Whitespace-separated list of unsigned integers -->
-//   // <xs:simpleType name="UIntVectorType">
-//   //   <xs:list itemType="xs:unsignedInt"/>
-//   // </xs:simpleType>
-
-//   // #[test]
-//   // fn list_type() {
-//   //   let st = SimpleType {
-//   //     name: "string-list".to_string(),
-//   //     restriction: None,
-//   //     list: Some(List{
-//   //       item_type: "xs:string".to_string()
-//   //     }),
-//   //     union: None,
-//   //   };
-
-//   //   let context = XsdContext {
-//   //     xml_schema_prefix: Some("xs".to_string()),
-//   //   };
-
-//   //   let ts = st
-//   //     .get_implementation(&quote!(), &None, &context)
-//   //     .to_string();
-//   //   println!("{}", ts);
-//   //   assert!(ts == format!("{}pub struct StringList {{ # [ yaserde ( text ) ] pub content : String , }}", DERIVES));
-//   // }
-// }
+    #[yaserde(rename = "simpleType")]
+    pub simple_types: Vec<SimpleType>, // 处理多个 simpleType
+}

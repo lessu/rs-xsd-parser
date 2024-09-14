@@ -25,6 +25,6 @@ fn main() {
     println!("Output file: {}", cli.output);
     let bt = BTreeMap::new();
 
-    let instance = xsd::Xsd::new_from_file("test",&cli.input,&bt);
-
+    let instance = xsd::Xsd::new_from_file("test",&cli.input,&bt).unwrap();
+    print!("{:#?}",instance);
 }
