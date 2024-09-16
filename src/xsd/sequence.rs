@@ -37,13 +37,13 @@ pub struct All {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element")]
+    #[yaserde(rename = "element", prefix = "xs")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "any")]
+    #[yaserde(rename = "any", prefix = "xs")]
     pub any: Vec<Any>,
 
-    #[yaserde(rename = "group")]
+    #[yaserde(rename = "group", prefix = "xs")]
     pub groups: Vec<Group>,
 }
 /**
@@ -65,7 +65,7 @@ pub struct Choice {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs",default)]
+    #[yaserde(attribute, rename = "maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
     #[yaserde(attribute, rename = "minOccurs",default = "default_u32_1")]
@@ -74,19 +74,19 @@ pub struct Choice {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element")]
+    #[yaserde(rename = "element", prefix = "xs")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "group")]
+    #[yaserde(rename = "group", prefix = "xs")]
     pub groups: Vec<Group>,
 
-    #[yaserde(rename = "choice")]
+    #[yaserde(rename = "choice", prefix = "xs")]
     pub choices: Vec<Choice>,
 
-    #[yaserde(rename = "sequence")]
+    #[yaserde(rename = "sequence", prefix = "xs")]
     pub sequences: Vec<Sequence>,
 
-    #[yaserde(rename = "any")]
+    #[yaserde(rename = "any", prefix = "xs")]
     pub any: Vec<Any>,
 }
 
@@ -118,18 +118,18 @@ pub struct Sequence {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element")]
+    #[yaserde(rename = "element", prefix = "xs")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "group")]
+    #[yaserde(rename = "group", prefix = "xs")]
     pub groups: Vec<Group>,
 
-    #[yaserde(rename = "choice")]
+    #[yaserde(rename = "choice", prefix = "xs")]
     pub choices: Vec<Choice>,
 
-    #[yaserde(rename = "sequence")]
+    #[yaserde(rename = "sequence", prefix = "xs")]
     pub sequences: Vec<Sequence>,
 
-    #[yaserde(rename = "any")]
+    #[yaserde(rename = "any", prefix = "xs")]
     pub any: Vec<Any>,
 }

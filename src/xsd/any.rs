@@ -3,10 +3,9 @@ use crate::xsd::default_fn::*;
 
 use crate::xsd::{
     annotation::Annotation,
-    type_def::ProcessContents
+    type_def::ProcessContents,
+    max_occurences::MaxOccurences
 };
-
-use super::max_occurences::MaxOccurences;
 
 /**
  * <any

@@ -1,7 +1,5 @@
 use yaserde::*;
 
-use crate::xsd::any::Any;
-
 /**
  * <annotation
  *  id = ID
@@ -19,10 +17,10 @@ pub struct Annotation {
     #[yaserde(attribute)]
     pub id: Option<String>,
 
-    #[yaserde(rename = "appinfo")]
+    #[yaserde(rename = "appinfo", prefix = "xs" )]
     pub appinfo: Vec<AppInfo>,
 
-    #[yaserde(rename = "documentation")]
+    #[yaserde(rename = "documentation", prefix = "xs" )]
     pub documentation: Vec<Documentation>,
 }
 
@@ -43,8 +41,8 @@ pub struct AppInfo {
     #[yaserde(attribute)]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(rename = "any")]
-    pub content: Vec<Any>,
+    #[yaserde(text)]
+    pub text: String,
 }
 /**
  * <documentation
@@ -64,9 +62,9 @@ pub struct Documentation {
     #[yaserde(attribute)]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(attribute, rename = "xml:lang")]
-    pub xml_lang: Option<String>, // language
+    #[yaserde(attribute, rename = "lang", prefix="xml")]
+    pub lang: Option<String>, // language
 
-    #[yaserde(rename = "any")]
-    pub content: Vec<Any>,
+    #[yaserde(text)]
+    pub text: String,
 }

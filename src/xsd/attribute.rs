@@ -1,27 +1,41 @@
 use yaserde::*;
 
 use crate::xsd::{
-  types::SimpleType,
-  annotation::Annotation,
-  type_def::Form,
+    types::SimpleType,
+    annotation::Annotation,
+    type_def::{Form, ProcessContents}
 };
-
-use super::type_def::ProcessContents;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
-  prefix = "xs",
-  namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
 pub struct AttributeType{
-  #[yaserde(rename = "attribute", prefix = "xs")]
-  pub attributes: Vec<Attribute>,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
 
-  #[yaserde(rename = "attributeGroup", prefix = "xs")]
-  pub attribute_groups: Vec<AttributeGroup>,
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<AttributeGroup>,
 
-  #[yaserde(rename = "anyAttribute", prefix = "xs")]
-  pub any_attributes: Option<AnyAttribute>,
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
+}
+
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct RefAttributeType{
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<RefAttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 }
 
 /**
@@ -42,46 +56,46 @@ pub struct AttributeType{
  */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
-  rename = "attribute",
-  prefix = "xs",
-  namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    rename = "attribute",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
 pub struct Attribute {
-  #[yaserde(attribute)]
-  pub name: Option<String>,
+    #[yaserde(attribute)]
+    pub name: Option<String>,
 
-  #[yaserde(attribute)]
-  pub default: Option<String>,
+    #[yaserde(attribute)]
+    pub default: Option<String>,
 
-  #[yaserde(attribute)]
-  pub fixed: Option<String>,
+    #[yaserde(attribute)]
+    pub fixed: Option<String>,
 
-  #[yaserde(attribute)]
-  pub form: Option<Form>,
+    #[yaserde(attribute)]
+    pub form: Option<Form>,
 
-  #[yaserde(attribute)]
-  pub id: Option<String>,
+    #[yaserde(attribute)]
+    pub id: Option<String>,
 
-  #[yaserde(attribute)]
-  target_namespace: Option<String>,
+    #[yaserde(attribute)]
+    target_namespace: Option<String>,
 
-  #[yaserde(attribute, rename = "type")]
-  pub type_v: Option<String>,
+    #[yaserde(attribute, rename = "type")]
+    pub type_v: Option<String>,
 
-  #[yaserde(rename = "use", attribute, default)]
-  pub required: Use,
+    #[yaserde(rename = "use", attribute, default="default_use")]
+    pub use_v: Use,
 
-  #[yaserde(rename = "ref", attribute)]
-  pub ref_v: Option<String>,
+    #[yaserde(rename = "ref", attribute)]
+    pub ref_v: Option<String>,
 
-  #[yaserde(rename = "simpleType", prefix = "xs")]
-  pub simple_type: Option<SimpleType>,
+    #[yaserde(rename = "simpleType", prefix = "xs")]
+    pub simple_type: Option<SimpleType>,
 
-  #[yaserde(rename = "annotation", prefix = "xs")]
-  pub annotation: Option<Annotation>,
-  
-  #[yaserde(attribute)]
-  pub inheritable: Option<bool>,
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+
+    #[yaserde(attribute)]
+    pub inheritable: Option<bool>,
 }
 
 
@@ -120,9 +134,36 @@ pub struct AttributeGroup {
     pub annotation: Option<Annotation>,
 
     #[yaserde(flatten)]
-    pub attributes: Option<AttributeType>,
+    pub attributes: RefAttributeType,
 }
+/**
+ * <attributeGroup
+ *   id = ID
+ *   ref = QName
+ *   {any attributes with non-schema namespace . . .}>
+ *   Content: (annotation?)
+ * </attributeGroup>
+ */
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "attributeGroup",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct RefAttributeGroup {
+    #[yaserde(attribute)]
+    pub id: Option<String>,
 
+    #[yaserde(attribute, rename = "ref")]
+    pub ref_v: Option<String>, // QName
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+
+}
+fn default_use() -> Use{
+  Use::Optional
+}
 
 /**
  * <anyAttribute

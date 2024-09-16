@@ -265,8 +265,7 @@ checksum = "af4e2e2f7cba5a093896c1e150fbfe177d1883e7448200efb81d40b9d339ef26"
 [[package]]
 name = "yaserde"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "900cbdbdc6d2b928a934b9d2e267fb2b6443abd0b8233d0a6513f4455c82c8b4"
+source = "git+https://github.com/media-io/yaserde.git?rev=refs/pull/193/head#1446923a95e80c81cdaf28f5625aef8d0ce3e73d"
 dependencies = [
  "log",
  "xml-rs",
@@ -276,8 +275,7 @@ dependencies = [
 [[package]]
 name = "yaserde_derive"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c073afd0840610a22ec32fd8716a56afd990f1b86bed1162fbe16d895a04079e"
+source = "git+https://github.com/media-io/yaserde.git?rev=refs/pull/193/head#1446923a95e80c81cdaf28f5625aef8d0ce3e73d"
 dependencies = [
  "heck",
  "log",

@@ -1,36 +1,15 @@
+use std::default;
+
 use crate::xsd::default_fn::*;
 
 use yaserde::*;
 use crate::xsd::{
-    types::SimpleType,
-    any::Any,
     annotation::Annotation,
-    attribute::AttributeType, 
-    group::Group,
-    content::OpenContent,
-    sequence::{All, Choice, Sequence}
+    sequence::{All, Choice, Sequence},
+    element::TypeComponent,
+    group::Group
 };
 
-use super::element::TypeComponent;
-
-#[derive(Clone, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
-)]
-pub enum GroupComponenet {
-    #[yaserde(rename = "All", prefix = "xs")]
-    All(All),
-    #[yaserde(rename = "Choice", prefix = "xs")]
-    Choice(Choice),
-    #[yaserde(rename = "Sequence", prefix = "xs")]
-    Sequence(Sequence),
-}
-impl Default for GroupComponenet {
-    fn default() -> Self {
-        GroupComponenet::All(All::default())
-    }
-}
 
 /**
  * <selector
@@ -231,7 +210,7 @@ pub struct Alternative {
     pub annotation: Option<Annotation>,
 
     #[yaserde(flatten)]
-    pub type_component:Option<TypeComponent>
+    pub type_component:TypeComponent
 }
 /**
  * <assert
@@ -284,126 +263,29 @@ pub enum ProcessContents {
     Strict,
 }
 
-/**
- * <restriction
- *  base = QName
- *  id = ID
- *  {any attributes with non-schema namespace . . .}>
- *    Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | {any with namespace: ##other})*)?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
- * </restriction>
- */
+
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
-    rename = "restriction",
     prefix = "xs",
     namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
-pub struct Restriction {
-    #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+pub enum ComplexChildren{
+    #[default]
+    None,
 
-    #[yaserde(attribute)]
-    pub id: Option<String>,
+    #[yaserde(rename = "group", prefix = "xs")]
+    Group(Group),
+    
+    #[yaserde(rename = "all", prefix = "xs")]
+    All(All),
+    
+    #[yaserde(rename = "choice", prefix = "xs")]
+    Choice(Choice),
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
-    pub annotation: Option<Annotation>,
-
-    #[yaserde(rename = "simpleType")]
-    pub simple_type: Vec<SimpleType>,
-
-    #[yaserde(rename = "minExclusive")]
-    pub min_exclusive: Vec<MinExclusive>,
-
-    #[yaserde(rename = "minInclusive")]
-    pub min_inclusive: Vec<MinInclusive>,
-
-    #[yaserde(rename = "maxExclusive")]
-    pub max_exclusive: Vec<MaxExclusive>,
-
-    #[yaserde(rename = "maxInclusive")]
-    pub max_inclusive: Vec<MaxInclusive>,
-
-    #[yaserde(rename = "totalDigits")]
-    pub total_digits: Vec<TotalDigits>,
-
-    #[yaserde(rename = "fractionDigits")]
-    pub fraction_digits: Vec<FractionDigits>,
-
-    #[yaserde(rename = "length")]
-    pub length: Vec<Length>,
-
-    #[yaserde(rename = "minLength")]
-    pub min_length: Vec<MinLength>,
-
-    #[yaserde(rename = "maxLength")]
-    pub max_length: Vec<MaxLength>,
-
-    #[yaserde(rename = "enumeration")]
-    pub enumeration: Vec<Enumeration>,
-
-    #[yaserde(rename = "whiteSpace")]
-    pub white_space: Vec<WhiteSpace>,
-
-    #[yaserde(rename = "pattern")]
-    pub pattern: Vec<Pattern>,
-
-    #[yaserde(rename = "assertion")]
-    pub assertion: Vec<Assertion>,
-
-    #[yaserde(rename = "explicitTimezone")]
-    pub explicit_timezone: Vec<ExplicitTimezone>,
-
-    #[yaserde(rename = "any")]
-    pub any: Vec<Any>,
+    #[yaserde(rename = "sequence", prefix = "xs")]
+    Sequence(Sequence)
 }
 
-
-
-/**
- * <extension
- *   base = QName
- *   id = ID
- *   {any attributes with non-schema namespace . . .}>
- *     Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
- * </extension>
- */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "extension",
-    prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
-)]
-pub struct Extension {
-    #[yaserde(attribute)]
-    pub base: Option<String>, // QName
-
-    #[yaserde(attribute)]
-    pub id: Option<String>,
-
-    #[yaserde(rename = "annotation", prefix = "xs")]
-    pub annotation: Option<Annotation>,
-
-    #[yaserde(rename = "openContent")]
-    pub open_content: Option<OpenContent>,
-
-    #[yaserde(rename = "group")]
-    pub group: Option<Group>,
-
-    #[yaserde(rename = "all")]
-    pub all: Option<All>,
-
-    #[yaserde(rename = "choice")]
-    pub choice: Option<Choice>,
-
-    #[yaserde(rename = "sequence")]
-    pub sequence: Option<Sequence>,
-
-    #[yaserde(flatten)]
-    pub attributes: AttributeType,
-
-    #[yaserde(rename = "assert")]
-    pub asserts: Vec<Assert>,
-}
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(

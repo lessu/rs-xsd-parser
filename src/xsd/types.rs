@@ -1,81 +1,29 @@
 use yaserde::*;
 use crate::xsd::default_fn::*;
 use crate::xsd::{
-    group::Group,
-    content::SimpleContent,
-    content::ComplexContent,
+    content::{SimpleContent, ComplexContent, OpenContent},
     annotation::Annotation,
-    type_def::Assert,
-    sequence::{All, Choice, Sequence},
-    content::OpenContent,
-    type_def::Restriction
+    attribute::RefAttributeType,
+    type_def::{Assert, Assertion, ComplexChildren, Enumeration, ExplicitTimezone, FractionDigits, Length, MaxExclusive, MaxInclusive, MaxLength, MinExclusive, MinInclusive, MinLength, Pattern, TotalDigits, WhiteSpace}
 };
 
-use super::attribute::AttributeType;
-
-
-
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
-pub struct ComplexTypeOpenContent{
-    #[yaserde(rename = "openContent", prefix = "xs")]
-    pub open_content: Option<OpenContent>,
+pub enum ComplexTypeContent{
+    #[default]
+    None,
 
-    #[yaserde(flatten)]
-    pub complex_type_enum1: Option<ComplexTypeEnum1>,
-
-    #[yaserde(flatten)]
-    pub attribute: AttributeType,
-
-    #[yaserde(rename = "assert", prefix = "xs")]
-    pub assert: Vec<Assert>
-}
-
-
-#[derive(Clone, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
-)]
-pub enum ComplexTypeEnum1{
-    #[yaserde(rename = "group", prefix = "xs")]
-    Group(Group),
-    
-    #[yaserde(rename = "all", prefix = "xs")]
-    All(All),
-    
-    #[yaserde(rename = "choice", prefix = "xs")]
-    Choice(Choice),
-
-    #[yaserde(rename = "sequence", prefix = "xs")]
-    Sequence(Sequence)
-}
-impl Default for ComplexTypeEnum1 {
-    fn default() -> Self {
-        ComplexTypeEnum1::Group(Group::default())
-    }
-}
-
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
-)]
-pub struct ComplexTypeContent{
-    /**
-     * 3 pick 1
-     */
     #[yaserde(rename = "simpleContent", prefix = "xs")]
-    pub simple_content: Option<SimpleContent>,
+    SimpleContent(SimpleContent),
 
     #[yaserde(rename = "complexContent", prefix = "xs")]
-    pub complex_content: Option<ComplexContent>,
+    ComplexContent(ComplexContent),
 
-    #[yaserde(flatten)]
-    pub open_content: Option<ComplexTypeOpenContent>,
+    #[yaserde(rename = "openContent", prefix = "xs")]
+    OpenContent(OpenContent),
     
 }
 /**
@@ -90,6 +38,9 @@ pub struct ComplexTypeContent{
  *  {any attributes with non-schema namespace . . .}>
  *    Content: (annotation?, (simpleContent | complexContent | (openContent?, (group | all | choice | sequence)?, ((attribute | attributeGroup)*, anyAttribute?), assert*)))
  * </complexType>
+ * 
+ * Content means simpleContent | complexContent | openContent are optional, and only one will apear
+ * if simpleContent or complexContent, then you can't add other content (like gourp, attribute, etc)
  */
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -123,27 +74,33 @@ pub struct ComplexType {
     pub annotation: Option<Annotation>,
 
     #[yaserde(flatten)]
-    pub content: ComplexTypeContent
+    pub content: ComplexTypeContent,
+
+    #[yaserde(flatten)]
+    pub complex_children: ComplexChildren,
+
+    #[yaserde(flatten)]
+    pub attribute: RefAttributeType,
+
+    #[yaserde(rename = "assert", prefix = "xs")]
+    pub assert: Vec<Assert>
 
 }
 
-#[derive(Clone, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespace = "xs: http://www.w3.org/2001/XMLSchema"
 )]
 pub enum SimpleTypeComponenet {
+    #[default]
+    None,
     #[yaserde(rename = "restriction", prefix = "xs")]
-    Restriction(Restriction),
+    Restriction(SimpleTypeRestriction),
     #[yaserde(rename = "list", prefix = "xs")]
     List(List),
     #[yaserde(rename = "union", prefix = "xs")]
     Union(Union),
-}
-impl Default for SimpleTypeComponenet {
-    fn default() -> Self {
-        SimpleTypeComponenet::Restriction(Restriction::default())
-    }
 }
 
 /**
@@ -178,6 +135,78 @@ pub struct SimpleType {
     pub restriction: SimpleTypeComponenet
 }
 
+/** SimpleType
+ * <restriction
+ *   base = QName
+ *   id = ID
+ *   {any attributes with non-schema namespace . . .}>
+ *   Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | explicitTimezone | {any with namespace: ##other})*))
+ * </restriction>
+ */
+#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[yaserde(
+    rename = "restriction",
+    prefix = "xs",
+    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+)]
+pub struct SimpleTypeRestriction {
+    #[yaserde(attribute)]
+    pub base: Option<String>, // QName
+
+    #[yaserde(attribute)]
+    pub id: Option<String>,
+
+    #[yaserde(rename = "annotation", prefix = "xs")]
+    pub annotation: Option<Annotation>,
+
+    // Use Vec to avoid nesting reference
+    #[yaserde(rename = "simpleType", prefix = "xs")]
+    pub simple_type: Vec<SimpleType>,
+
+    #[yaserde(rename = "minExclusive", prefix = "xs")]
+    pub min_exclusive: Option<MinExclusive>,
+
+    #[yaserde(rename = "minInclusive", prefix = "xs")]
+    pub min_inclusive: Option<MinInclusive>,
+
+    #[yaserde(rename = "maxExclusive", prefix = "xs")]
+    pub max_exclusive: Option<MaxExclusive>,
+
+    #[yaserde(rename = "maxInclusive", prefix = "xs")]
+    pub max_inclusive: Option<MaxInclusive>,
+
+    #[yaserde(rename = "totalDigits", prefix = "xs")]
+    pub total_digits: Option<TotalDigits>,
+
+    #[yaserde(rename = "fractionDigits", prefix = "xs")]
+    pub fraction_digits: Option<FractionDigits>,
+
+    #[yaserde(rename = "length", prefix = "xs")]
+    pub length: Option<Length>,
+
+    #[yaserde(rename = "minLength", prefix = "xs")]
+    pub min_length: Option<MinLength>,
+
+    #[yaserde(rename = "maxLength", prefix = "xs")]
+    pub max_length: Option<MaxLength>,
+
+    #[yaserde(rename = "enumeration", prefix = "xs")]
+    pub enumeration: Vec<Enumeration>,
+
+    #[yaserde(rename = "whiteSpace", prefix = "xs")]
+    pub white_space: Vec<WhiteSpace>,
+
+    #[yaserde(rename = "pattern", prefix = "xs")]
+    pub pattern: Vec<Pattern>,
+
+    #[yaserde(rename = "assertion", prefix = "xs")]
+    pub assertion: Vec<Assertion>,
+
+    #[yaserde(rename = "explicitTimezone", prefix = "xs")]
+    pub explicit_timezone: Vec<ExplicitTimezone>,
+
+}
+
 /**
  * <list
  *  id = ID
@@ -203,7 +232,7 @@ pub struct List {
     pub annotation: Option<Annotation>,
 
     // use Vec to avoid nesting reference
-    #[yaserde(rename = "simpleType")]
+    #[yaserde(rename = "simpleType", prefix = "xs")]
     pub simple_type: Vec<SimpleType>,
 }
 /**
