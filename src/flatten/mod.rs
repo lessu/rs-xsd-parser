@@ -1,37 +1,37 @@
 pub mod attribute;
 pub mod datamodel_map;
+pub mod types;
 
 use datamodel_map::XsdDataModel;
 
-use crate::xsd::{attribute::{Attribute, AttributeGroup, AttributeType}, element::{Element, TypeComponent}};
-
+use crate::xsd::{attribute::{Attribute, AttributeGroup, RefAttributeGroup, AttributeType}, element::{Element, TypeComponent}};
 impl AttributeGroup {
-    pub fn is_ref(&self) -> bool{
-        self.ref_v.is_some()
-    }
     pub fn flatten_attributes<'a>(&'a self, xsd:&'a XsdDataModel) -> Vec<&'a Attribute>{
+        let mut attributes = Vec::new();
 
-        if self.is_ref() {
-            let ref_name = self.ref_v.as_ref().unwrap();
-            if let Some(ag) = xsd.attribute_group.get(ref_name) {
-                ag.flatten_attributes(xsd)
-            } else {
-                Vec::new()
-            }
-        }else{
-            let mut attributes = Vec::new();
-
-            for attr in &self.attributes.as_ref().unwrap().attributes {
+        for attr in &self.attributes.attributes {
+            attributes.push(attr);
+        }
+        for ag in &self.attributes.attribute_groups {
+            let child_attributes = ag.flatten_attributes(xsd);
+            for attr in child_attributes {
                 attributes.push(attr);
             }
-            for ag in &self.attributes.as_ref().unwrap().attribute_groups {
-                let child_attributes = ag.flatten_attributes(xsd);
-                for attr in child_attributes {
-                    attributes.push(attr);
-                }
-            }
-            attributes
         }
+        attributes
+    }
+}
+
+impl RefAttributeGroup {
+    pub fn flatten_attributes<'a>(&'a self, xsd:&'a XsdDataModel) -> Vec<&'a Attribute>{
+
+        let ref_name = self.ref_v.as_ref().unwrap();
+        if let Some(ag) = xsd.attribute_group.get(ref_name) {
+            ag.flatten_attributes(xsd)
+        } else {
+            Vec::new()
+        }
+
     }
 }
 
