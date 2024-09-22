@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use crate::xsd::{attribute::{Attribute, AttributeGroup}, element::Element, group::Group, types::{ComplexType, SimpleType}, Xsd};
+use crate::xsd::{attribute::{Attribute, AttributeGroup}, element::{Element, TypeComponent}, group::Group, types::{ComplexType, SimpleType}, Xsd};
 
 #[derive(Debug)]
 pub struct XsdDataModel<'a> {
@@ -10,6 +10,12 @@ pub struct XsdDataModel<'a> {
     pub attribute: BTreeMap<String,&'a Attribute>,
     pub attribute_group: BTreeMap<String,&'a AttributeGroup>,
     pub group: BTreeMap<String,&'a Group>,
+}
+
+pub enum TypeFindResult<'a> {
+    None,
+    Simple(&'a SimpleType),
+    Complex(&'a ComplexType)
 }
 
 impl<'a> XsdDataModel<'a> {
@@ -58,4 +64,31 @@ impl<'a> XsdDataModel<'a> {
         }
     }
     
+    pub fn find_type(&'a self, element: &'a Element) -> TypeFindResult<'a> {
+        match &element.type_component {
+            TypeComponent::None => {
+                if let Some(name) = element.type_v.as_ref() {
+                    if let Some(t) = self.simple_type.get(name) {
+                        TypeFindResult::Simple(t)
+                    }
+                    else if let Some(t) = self.complex_type.get(name) {
+                        TypeFindResult::Complex(t)
+                    }
+                    else{
+                        TypeFindResult::None
+                    }
+                }else{
+                    TypeFindResult::None
+                }
+            }
+            TypeComponent::SimpleType(t) =>  {
+                TypeFindResult::Simple(t)
+            }
+            TypeComponent::ComplexType(t) => {
+                TypeFindResult::Complex(t)
+            }
+        }
+    }
+    
 }
+
