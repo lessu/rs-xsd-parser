@@ -1,0 +1,15 @@
+[package]
+name = "rs-xsd-parser-derive"
+version = "0.1.0"
+edition = "2021"
+authors = ["Mingyi Li<lessu@163.com>"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+quote = { version = "1.0" }
+syn = { version = "1.0", features = ["full"] }
+
+[dev-dependencies]
+proc-macro2 = "1.0"

@@ -1,0 +1,20 @@
+   <!-- attribute group for class ArObject::ARObject -->
+   <xsd:attributeGroup name="AR-OBJECT" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:annotation>
+         <xsd:documentation>Implicit base class of all classes in meta-model.</xsd:documentation>
+         <xsd:appinfo source="tags">mmt.qualifiedName="ARObject"</xsd:appinfo>
+         <xsd:appinfo source="stereotypes">atpObject</xsd:appinfo>
+      </xsd:annotation>
+      <xsd:attribute name="S" type="AR:STRING--SIMPLE">
+         <xsd:annotation>
+            <xsd:documentation>Checksum calculated by the user's tool environment for an ArObject. May be used in an own tool environment to determine if an ArObject has changed. The checksum has no semantic meaning for an AUTOSAR model and there is no requirement for AUTOSAR tools to manage the checksum.</xsd:documentation>
+            <xsd:appinfo source="tags">mmt.qualifiedName="ARObject.checksum";pureMM.maxOccurs="1";pureMM.minOccurs="0";xml.attribute="true";xml.name="S"</xsd:appinfo>
+         </xsd:annotation>
+      </xsd:attribute>
+      <xsd:attribute name="T" type="AR:DATE--SIMPLE">
+         <xsd:annotation>
+            <xsd:documentation>Timestamp calculated by the user's tool environment for an ArObject. May be used in an own tool environment to determine the last change of an ArObject. The timestamp has no semantic meaning for an AUTOSAR model and there is no requirement for AUTOSAR tools to manage the timestamp.</xsd:documentation>
+            <xsd:appinfo source="tags">mmt.qualifiedName="ARObject.timestamp";pureMM.maxOccurs="1";pureMM.minOccurs="0";xml.attribute="true";xml.name="T"</xsd:appinfo>
+         </xsd:annotation>
+      </xsd:attribute>
+   </xsd:attributeGroup>

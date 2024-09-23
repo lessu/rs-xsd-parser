@@ -1,6 +1,7 @@
 # XSD Parser
 
 - standard: https://www.w3.org/TR/xmlschema11-1
+- type_def: https://www.w3.org/TR/2012/REC-xmlschema11-2-20120405/datatypes.html
 
 ## feature
 - [?] xs:schema
