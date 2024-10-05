@@ -1,7 +1,13 @@
+/**
+ *  AnyType,
+ *   -- anySimpleType,
+ *      -- anyAtmoicType
+ */
 pub enum AtomicType{
     None,
     Other,
     /* xsd */
+    Any,
     AnyURI,
     Base64Binary,
     Boolean,
@@ -49,11 +55,13 @@ pub enum AtomicType{
 }
 
 impl AtomicType {
-    pub fn from_str(atomic_type: &str) -> Self {
-        if atomic_type == "" {
+    pub fn from_str_type(atomic_type: &str) -> Self {
+        if atomic_type.is_empty() {
             return AtomicType::None;
         }
         match atomic_type.to_lowercase().as_str() {
+            "anyatomic" => AtomicType::Any,
+            "anysimple" => AtomicType::Any,
             "anyuri" => AtomicType::AnyURI,
             "base64binary" => AtomicType::Base64Binary,
             "boolean" => AtomicType::Boolean,
@@ -104,6 +112,7 @@ impl AtomicType {
 
     pub fn to_native_type_simple(&self) -> &str {
         match self {
+            AtomicType::Any => "String",
             AtomicType::String => "String",
             AtomicType::Interger => "i32",
             AtomicType::Byte => "i8",

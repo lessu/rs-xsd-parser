@@ -1,11 +1,8 @@
 use std::{error::Error, fmt::Display};
 
-use crate::xsd::attribute::{
-    Attribute, 
-    RefAttributeType,
-    AttributeGroup,
-    RefAttributeGroup
-};
+use crate::xsd::{attribute::{
+    Attribute, AttributeGroup, RefAttributeGroup, RefAttributeType
+}, common_type::QName};
 
 use super::datamodel_map::XsdDataModel;
 
@@ -97,5 +94,17 @@ impl RefAttributeGroup {
         }
         None
     }
+}
+
+
+pub trait AttributeTrait{ }
+
+impl<T :AttributeTrait> QName<T>{
+    pub fn dereference() -> Option<Attribute>{
+        None
+    }
+}
+
+impl AttributeTrait for Attribute{
 }
 

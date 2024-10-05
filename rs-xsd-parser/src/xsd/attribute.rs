@@ -4,8 +4,9 @@ use crate::xsd::{
     types::SimpleType,
     annotation::Annotation,
     type_def::{Form, ProcessContents},
-    common_type::QName
 };
+
+use super::common_type::QName;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -87,7 +88,7 @@ pub struct Attribute {
     pub use_v: Use,
 
     #[yaserde(rename = "ref", attribute)]
-    pub ref_v: Option<QName>,
+    pub ref_v: Option<QName<Attribute>>,
 
     #[yaserde(rename = "simpleType", prefix = "xs")]
     pub simple_type: Option<SimpleType>,

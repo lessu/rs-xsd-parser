@@ -2,10 +2,12 @@ extern crate proc_macro;
 use quote::quote;
 use proc_macro::TokenStream;
 use syn::{parse::Parser, parse_macro_input, DeriveInput};
-
 #[proc_macro_attribute]
-pub fn string_based(_args: TokenStream, input: TokenStream) -> TokenStream {
+pub fn string_based(args: TokenStream, input: TokenStream) -> TokenStream {
     let mut input = parse_macro_input!(input as DeriveInput);
+    
+    // let _ast:DeriveInput = syn::parse(args).unwrap();
+
     let name = &input.ident;
     let struct_impl = match &mut input.data {
         syn::Data::Struct(ref mut struct_data) => {           
@@ -15,7 +17,7 @@ pub fn string_based(_args: TokenStream, input: TokenStream) -> TokenStream {
                         .named
                         .push(syn::Field::parse_named.parse2(quote! { pub str: String }).unwrap());
                 }   
-                _ => { () }
+                _ => { }
             }
             quote! { #input }
         }
@@ -25,11 +27,11 @@ pub fn string_based(_args: TokenStream, input: TokenStream) -> TokenStream {
     let expanded = quote! {
         use std::fmt::Write;
         #struct_impl
-        impl #name{
-            pub fn as_str(&self) -> &str{
-                self.str.as_str()
-            }
-        }
+//        impl #name{
+//            pub fn as_str(&self) -> &str{
+//                self.str.as_str()
+//            }
+//        }
         impl yaserde::YaDeserialize for #name {
             fn deserialize<R: std::io::Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
                 let mut ret = String::new();
@@ -64,7 +66,9 @@ pub fn string_based(_args: TokenStream, input: TokenStream) -> TokenStream {
                 if let Some(err_str) = err {
                     Err(err_str)
                 } else {
-                    Ok(#name { str: ret })
+                    let mut sb = #name::default();
+                    sb.str = ret;
+                    Ok(sb)
                 }
             }
         }
