@@ -8,6 +8,8 @@ use crate::xsd::{
     types::SimpleType
 };
 
+use super::{atomic_type::BaseType, common_type::QName};
+
 
 
 /**
@@ -70,7 +72,7 @@ pub enum ComplexContextRestrictionOrExtrension {
  )]
  pub struct ComplexContentRestriction {
     #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+    pub base: Option<QName<BaseType>>, // QName
 
     #[yaserde(attribute)]
     pub id: Option<String>,
@@ -108,7 +110,7 @@ pub enum ComplexContextRestrictionOrExtrension {
  )]
  pub struct ComplexContentExtension{
     #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+    pub base: Option<QName<BaseType>>, // QName
  
     #[yaserde(attribute)]
     pub id: Option<String>,
@@ -184,7 +186,7 @@ pub enum SimpleContextRestrictionOrExtrension {
 )]
 pub struct SimpleContentRestriction {
     #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+    pub base: Option<QName<BaseType>>, // QName
 
     #[yaserde(attribute)]
     pub id: Option<String>,
@@ -257,7 +259,7 @@ pub struct SimpleContentRestriction {
 )]
 pub struct SimpleContentExtension{
     #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+    pub base: Option<QName<BaseType>>, // QName
 
     #[yaserde(attribute)]
     pub id: Option<String>,

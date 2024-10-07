@@ -11,6 +11,9 @@ use crate::xsd::{
     types::ComplexType,
     types::SimpleType
 };
+
+use super::common_type::QName;
+use super::types::Types;
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
@@ -99,7 +102,7 @@ pub struct Element {
     pub target_namespace: Option<String>,
 
     #[yaserde(attribute, rename = "type")]
-    pub type_v: Option<String>,
+    pub type_v: Option<QName<Types>>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

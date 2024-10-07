@@ -6,7 +6,7 @@ use crate::xsd::{
     type_def::{Form, ProcessContents},
 };
 
-use super::common_type::QName;
+use super::{common_type::QName, types::Types};
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
@@ -82,7 +82,7 @@ pub struct Attribute {
     target_namespace: Option<String>,
 
     #[yaserde(attribute, rename = "type")]
-    pub type_v: Option<String>,
+    pub type_v: Option<QName<Types>>,
 
     #[yaserde(rename = "use", attribute, default="default_use")]
     pub use_v: Use,
@@ -130,7 +130,7 @@ pub struct AttributeGroup {
     pub name: Option<String>, // NCName
 
     #[yaserde(attribute, rename = "ref")]
-    pub ref_v: Option<String>, // QName
+    pub ref_v: Option<QName<AttributeGroup>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -157,7 +157,7 @@ pub struct RefAttributeGroup {
     pub id: Option<String>,
 
     #[yaserde(attribute, rename = "ref")]
-    pub ref_v: Option<String>, // QName
+    pub ref_v: Option<QName<AttributeGroup>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

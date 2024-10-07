@@ -2,7 +2,8 @@ pub mod attribute;
 pub mod datamodel_map;
 pub mod types;
 
-use datamodel_map::XsdDataModel;
+use datamodel_map::{TypeFindResult, XsdDataModel};
+use types::TypeRef;
 
 use crate::xsd::{attribute::{Attribute, AttributeGroup, RefAttributeGroup, AttributeType}, element::{Element, TypeComponent}};
 impl TypeComponent{
@@ -24,12 +25,16 @@ impl Element {
         let mut new = self.clone();
         if new.type_v.is_some() {
             let type_name = new.type_v.as_ref().unwrap();
-            if let Some(ct) = xsd.complex_type.get(type_name) {
-                let t = (*ct).clone();
-                new.type_component = TypeComponent::ComplexType(t);
-            }else if let Some(st) = xsd.simple_type.get(type_name) {
-                let t = (*st).clone();
-                new.type_component = TypeComponent::SimpleType(t);
+            match self.type_resolve(xsd){
+                TypeFindResult::Simple(st) => {
+                    let t = (*st).clone();
+                    new.type_component = TypeComponent::SimpleType(t);
+                }
+                TypeFindResult::Complex(ct) => {
+                    let t = (*ct).clone();
+                    new.type_component = TypeComponent::ComplexType(t);
+                }
+                TypeFindResult::None => { }
             }
         }
         

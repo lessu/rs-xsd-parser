@@ -3,6 +3,8 @@
  *   -- anySimpleType,
  *      -- anyAtmoicType
  */
+#[derive(Debug,Clone,PartialEq)]
+pub struct BaseType{ }
 pub enum AtomicType{
     None,
     Other,

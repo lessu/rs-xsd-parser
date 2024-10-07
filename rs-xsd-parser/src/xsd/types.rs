@@ -7,6 +7,9 @@ use crate::xsd::{
     type_def::{Assert, Assertion, ComplexChildren, Enumeration, ExplicitTimezone, FractionDigits, Length, MaxExclusive, MaxInclusive, MaxLength, MinExclusive, MinInclusive, MinLength, Pattern, TotalDigits, WhiteSpace}
 };
 
+use super::atomic_type::{AtomicType, BaseType};
+use super::common_type::QName;
+
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
@@ -151,7 +154,7 @@ pub struct SimpleType {
 )]
 pub struct SimpleTypeRestriction {
     #[yaserde(attribute)]
-    pub base: Option<String>, // QName
+    pub base: Option<QName<BaseType>>, // QName
 
     #[yaserde(attribute)]
     pub id: Option<String>,
@@ -261,4 +264,14 @@ pub struct Union {
 
     #[yaserde(rename = "simpleType")]
     pub simple_types: Vec<SimpleType>,
+}
+
+
+
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum Types{
+    None,
+    Simple(SimpleType),
+    Complex(ComplexType)
 }

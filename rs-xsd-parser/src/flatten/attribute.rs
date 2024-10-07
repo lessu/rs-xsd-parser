@@ -3,7 +3,6 @@ use std::{error::Error, fmt::Display};
 use crate::xsd::{attribute::{
     Attribute, AttributeGroup, RefAttributeGroup, RefAttributeType
 }, common_type::QName};
-
 use super::datamodel_map::XsdDataModel;
 
 #[derive(Debug, Default, Copy, Clone)]
@@ -88,7 +87,7 @@ impl AttributeGroup {
 impl RefAttributeGroup {
     pub fn deref<'a>(&'a self,dm: &'a XsdDataModel) -> Option<&'a AttributeGroup>{
         if let Some(ref_name) = self.ref_v.as_ref() {
-            if let Some(r) = dm.attribute_group.get(ref_name){
+            if let Some(r) = dm.attribute_group.get(ref_name.raw_value()){
                 return Some(*r);
             }
         }

@@ -5,6 +5,8 @@ use crate::xsd::{
     annotation::Annotation,
 };
 
+use super::common_type::QName;
+
 
 /**
  * <group
@@ -37,7 +39,7 @@ pub struct Group {
     pub name: Option<String>, // NCName
 
     #[yaserde(attribute, rename = "ref")]
-    pub ref_v: Option<String>, // QName
+    pub ref_v: Option<QName<Group>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

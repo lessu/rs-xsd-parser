@@ -44,3 +44,31 @@
 //         }
 //     }
 // }
+//
+use crate::xsd::{attribute::Attribute, common_type::QName, element::Element, types::Types};
+
+use super::datamodel_map::{TypeFindResult, XsdDataModel};
+pub trait TypeRef{
+    fn type_v(&self) -> Option<QName<Types>>;
+
+    fn type_resolve<'a>(&self,dm: &'a XsdDataModel) -> TypeFindResult<'a>{
+        if let Some(qname) = self.type_v(){
+            dm.resolve_type(&qname)
+        }else{
+            TypeFindResult::None
+        }
+    }
+}
+
+impl TypeRef for Attribute{
+    fn type_v(&self) -> Option<QName<Types>> {
+        self.type_v.clone()
+    }
+}
+
+
+impl TypeRef for Element{
+    fn type_v(&self) -> Option<QName<Types>> {
+        self.type_v.clone()
+    }
+}

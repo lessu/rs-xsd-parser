@@ -10,6 +10,8 @@ use crate::xsd::{
     group::Group
 };
 
+use super::{common_type::QName, types::Types};
+
 
 /**
  * <selector
@@ -201,7 +203,7 @@ pub struct Alternative {
     pub test: Option<String>,
 
     #[yaserde(attribute,rename = "type")]
-    pub type_v: Option<String>,
+    pub type_v: Option<QName<Types>>,
 
     #[yaserde(attribute, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,

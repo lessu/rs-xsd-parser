@@ -56,6 +56,11 @@ pub struct QName<T> {
     value:String
 }
 
+impl<T> QName<T>{
+    pub fn raw_value(&self) -> &str{
+        &self.value
+    }
+}
 impl<T> YaDeserialize for QName<T>{
     fn deserialize<R: std::io::Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
         let res = ya_xml_parse_string("QName",reader);
