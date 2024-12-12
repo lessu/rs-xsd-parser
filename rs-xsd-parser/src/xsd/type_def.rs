@@ -26,16 +26,16 @@ use super::{common_type::QName, types::Types};
 #[yaserde(
     rename = "selector",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Selector {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "xpath")]
+    #[yaserde(attribute = true, rename = "xpath")]
     pub xpath: String,
 
-    #[yaserde(attribute, rename = "xpathDefaultNamespace")]
+    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -54,16 +54,16 @@ pub struct Selector {
 #[yaserde(
     rename = "field",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Field {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "xpath")]
+    #[yaserde(attribute = true, rename = "xpath")]
     pub xpath: String,
 
-    #[yaserde(attribute, rename = "xpathDefaultNamespace")]
+    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -83,16 +83,16 @@ pub struct Field {
 #[yaserde(
     rename = "unique",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Unique {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub reference: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -119,16 +119,16 @@ pub struct Unique {
 #[yaserde(
     rename = "key",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Key {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub reference: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -155,19 +155,19 @@ pub struct Key {
 #[yaserde(
     rename = "keyref",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct KeyRef {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub reference: Option<String>,
 
-    #[yaserde(attribute, rename = "refer")]
+    #[yaserde(attribute = true, rename = "refer")]
     pub refer: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -193,25 +193,25 @@ pub struct KeyRef {
 #[yaserde(
     rename = "alternative",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Alternative {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub test: Option<String>,
 
-    #[yaserde(attribute,rename = "type")]
+    #[yaserde(attribute = true,rename = "type")]
     pub type_v: Option<QName<Types>>,
 
-    #[yaserde(attribute, rename = "xpathDefaultNamespace")]
+    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub type_component:TypeComponent
 }
 /**
@@ -227,16 +227,16 @@ pub struct Alternative {
 #[yaserde(
     rename = "assert",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Assert {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub test: Option<String>, // XPath
 
-    #[yaserde(attribute, rename = "xpathDefaultNamespace")]
+    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -269,7 +269,7 @@ pub enum ProcessContents {
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum ComplexChildren{
     #[default]
@@ -293,16 +293,16 @@ pub enum ComplexChildren{
 #[yaserde(
     rename = "minExclusive",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MinExclusive {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -312,16 +312,16 @@ pub struct MinExclusive {
 #[yaserde(
     rename = "minInclusive",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MinInclusive {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -331,16 +331,16 @@ pub struct MinInclusive {
 #[yaserde(
     rename = "maxExclusive",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MaxExclusive {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -350,16 +350,16 @@ pub struct MaxExclusive {
 #[yaserde(
     rename = "maxInclusive",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MaxInclusive {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<f32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -370,16 +370,16 @@ pub struct MaxInclusive {
 #[yaserde(
     rename = "totalDigits",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct TotalDigits {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -390,16 +390,16 @@ pub struct TotalDigits {
 #[yaserde(
     rename = "fractionDigits",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct FractionDigits {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -410,16 +410,16 @@ pub struct FractionDigits {
 #[yaserde(
     rename = "length",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Length {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -430,16 +430,16 @@ pub struct Length {
 #[yaserde(
     rename = "minLength",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MinLength {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -449,16 +449,16 @@ pub struct MinLength {
 #[yaserde(
     rename = "maxLength",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct MaxLength {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<u32>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -469,13 +469,13 @@ pub struct MaxLength {
 #[yaserde(
     rename = "enumeration",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Enumeration {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -486,16 +486,16 @@ pub struct Enumeration {
 #[yaserde(
     rename = "whiteSpace",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct WhiteSpace {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
     
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -505,13 +505,13 @@ pub struct WhiteSpace {
 #[yaserde(
     rename = "pattern",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Pattern {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -522,16 +522,16 @@ pub struct Pattern {
 #[yaserde(
     rename = "assertion",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Assertion {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub test: Option<String>, 
     
-    #[yaserde(attribute,rename="xpathDefaultNamespace")]
+    #[yaserde(attribute = true,rename="xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>, 
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -543,16 +543,16 @@ pub struct Assertion {
 #[yaserde(
     rename = "explicitTimezone",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct ExplicitTimezone {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub fixed: bool,
     
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub value: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]

@@ -11,10 +11,10 @@ use yaserde::*;
 #[yaserde(
     rename = "annotation",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Annotation {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "appinfo", prefix = "xs" )]
@@ -35,13 +35,13 @@ pub struct Annotation {
 #[yaserde(
     rename = "appinfo",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct AppInfo {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(text)]
+    #[yaserde(text = true)]
     pub text: String,
 }
 /**
@@ -56,15 +56,15 @@ pub struct AppInfo {
 #[yaserde(
     rename = "documentation",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Documentation {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(attribute, rename = "lang", prefix="xml")]
+    #[yaserde(attribute = true, rename = "lang", prefix="xml")]
     pub lang: Option<String>, // language
 
-    #[yaserde(text)]
+    #[yaserde(text = true)]
     pub text: String,
 }

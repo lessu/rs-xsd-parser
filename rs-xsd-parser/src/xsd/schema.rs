@@ -10,21 +10,21 @@ use crate::xsd::{
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
-  root="schema"
+  rename="schema",
   prefix="xs",
-  namespace="xs: http://www.w3.org/2001/XMLSchema",
+  namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" },
 )]
 pub struct Schema {
-  #[yaserde(attribute)]
+  #[yaserde(attribute = true)]
   pub xmlns : Option<String>,
   
-  #[yaserde(rename = "targetNamespace", attribute)]
+  #[yaserde(rename = "targetNamespace", attribute = true)]
   pub target_namespace: Option<String>,
 
-  #[yaserde(rename = "elementFormDefault", attribute)]
+  #[yaserde(rename = "elementFormDefault", attribute = true)]
   pub element_form_default: Option<Form>,
 
-  #[yaserde(rename = "attributeFormDefault", attribute)]
+  #[yaserde(rename = "attributeFormDefault", attribute = true)]
   pub attribute_form_default: Option<Form>,
 
   #[yaserde(rename = "import", prefix="xs")]
@@ -39,10 +39,10 @@ pub struct Schema {
   #[yaserde(rename = "complexType", prefix="xs")]
   pub complex_type: Vec<types::ComplexType>,
 
-  #[yaserde(rename = "attribute", prefix="xs")]
+  #[yaserde(rename = "attribute = true", prefix="xs")]
   pub attribute: Vec<attribute::Attribute>,
 
-  #[yaserde(rename = "attributeGroup", prefix="xs")]
+  #[yaserde(rename = "attribute = trueGroup", prefix="xs")]
   pub attribute_group: Vec<attribute::AttributeGroup>,
 
   #[yaserde(rename = "group", prefix  = "xs")]

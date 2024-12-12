@@ -24,28 +24,28 @@ use crate::xsd::{
 #[yaserde(
     rename = "any",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Any {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs", default)]
+    #[yaserde(attribute = true, rename = "maxOccurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1" )]
+    #[yaserde(attribute = true, rename = "minOccurs", default = "default_u32_1" )]
     pub min_occurs: u32,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub namespace: Option<String>,
 
-    #[yaserde(attribute, rename = "notNamespace")]
+    #[yaserde(attribute = true, rename = "notNamespace")]
     pub not_namespace: Vec<String>,
 
-    #[yaserde(attribute, rename = "notQName")]
+    #[yaserde(attribute = true, rename = "notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute, rename = "processContents",default)]
+    #[yaserde(attribute = true, rename = "processContents")]
     pub process_contents: ProcessContents,
 
     #[yaserde(rename = "annotation", prefix = "xs")]

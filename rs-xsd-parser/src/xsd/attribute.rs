@@ -11,13 +11,13 @@ use super::{common_type::QName, types::Types};
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct AttributeType{
-    #[yaserde(rename = "attribute", prefix = "xs")]
+    #[yaserde(rename = "attribute = true", prefix = "xs")]
     pub attributes: Vec<Attribute>,
 
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    #[yaserde(rename = "attribute = trueGroup", prefix = "xs")]
     pub attribute_groups: Vec<AttributeGroup>,
 
     #[yaserde(rename = "anyAttribute", prefix = "xs")]
@@ -27,13 +27,13 @@ pub struct AttributeType{
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct RefAttributeType{
-    #[yaserde(rename = "attribute", prefix = "xs")]
+    #[yaserde(rename = "attribute = true", prefix = "xs")]
     pub attributes: Vec<Attribute>,
 
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    #[yaserde(rename = "attribute = trueGroup", prefix = "xs")]
     pub attribute_groups: Vec<RefAttributeGroup>,
 
     #[yaserde(rename = "anyAttribute", prefix = "xs")]
@@ -60,34 +60,34 @@ pub struct RefAttributeType{
 #[yaserde(
     rename = "attribute",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Attribute {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub default: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub fixed: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub form: Option<Form>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     target_namespace: Option<String>,
 
-    #[yaserde(attribute, rename = "type")]
+    #[yaserde(attribute = true, rename = "type")]
     pub type_v: Option<QName<Types>>,
 
-    #[yaserde(rename = "use", attribute, default="default_use")]
+    #[yaserde(rename = "use", attribute = true, default="default_use")]
     pub use_v: Use,
 
-    #[yaserde(rename = "ref", attribute)]
+    #[yaserde(rename = "ref", attribute = true)]
     pub ref_v: Option<QName<Attribute>>,
 
     #[yaserde(rename = "simpleType", prefix = "xs")]
@@ -96,7 +96,7 @@ pub struct Attribute {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub inheritable: Option<bool>,
 }
 
@@ -120,22 +120,22 @@ pub struct Attribute {
 #[yaserde(
     rename = "attributeGroup",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct AttributeGroup {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>, // NCName
 
-    #[yaserde(attribute, rename = "ref")]
+    #[yaserde(attribute = true, rename = "ref")]
     pub ref_v: Option<QName<AttributeGroup>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub attributes: RefAttributeType,
 }
 /**
@@ -150,13 +150,13 @@ pub struct AttributeGroup {
 #[yaserde(
     rename = "attributeGroup",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct RefAttributeGroup {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "ref")]
+    #[yaserde(attribute = true, rename = "ref")]
     pub ref_v: Option<QName<AttributeGroup>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -182,22 +182,22 @@ fn default_use() -> Use{
 #[yaserde(
     rename = "anyAttribute",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct AnyAttribute {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub namespace: Option<String>,
 
-    #[yaserde(attribute, rename = "notNamespace")]
+    #[yaserde(attribute = true, rename = "notNamespace")]
     pub not_namespace: Vec<String>,
 
-    #[yaserde(attribute, rename = "notQName")]
+    #[yaserde(attribute = true, rename = "notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute, rename = "processContents",default)]
+    #[yaserde(attribute = true, rename = "processContents")]
     pub process_contents: ProcessContents,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
