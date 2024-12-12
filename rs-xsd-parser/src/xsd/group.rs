@@ -23,35 +23,35 @@ use super::common_type::QName;
 #[yaserde(
     rename = "group",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Group {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs")]
+    #[yaserde(attribute = true, rename = "maxOccurs")]
     pub max_occurs: Option<u32>,
 
-    #[yaserde(attribute, rename = "minOccurs")]
+    #[yaserde(attribute = true, rename = "minOccurs")]
     pub min_occurs: Option<u32>, 
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>, // NCName
 
-    #[yaserde(attribute, rename = "ref")]
+    #[yaserde(attribute = true, rename = "ref")]
     pub ref_v: Option<QName<Group>>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub componenet: GroupComponenet
 }
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum GroupComponenet {
     #[default]

@@ -10,21 +10,21 @@ use crate::xsd::{
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
-  root="schema"
+  rename="schema",
   prefix="xs",
-  namespace="xs: http://www.w3.org/2001/XMLSchema",
+  namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" },
 )]
 pub struct Schema {
-  #[yaserde(attribute)]
+  #[yaserde(attribute = true)]
   pub xmlns : Option<String>,
   
-  #[yaserde(rename = "targetNamespace", attribute)]
+  #[yaserde(rename = "targetNamespace", attribute = true)]
   pub target_namespace: Option<String>,
 
-  #[yaserde(rename = "elementFormDefault", attribute)]
+  #[yaserde(rename = "elementFormDefault", attribute = true)]
   pub element_form_default: Option<Form>,
 
-  #[yaserde(rename = "attributeFormDefault", attribute)]
+  #[yaserde(rename = "attributeFormDefault", attribute = true)]
   pub attribute_form_default: Option<Form>,
 
   #[yaserde(rename = "import", prefix="xs")]

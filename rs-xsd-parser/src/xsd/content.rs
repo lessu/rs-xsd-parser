@@ -24,19 +24,19 @@ use super::{atomic_type::BaseType, common_type::QName};
 #[yaserde(
     rename = "complexContent",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct ComplexContent {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub mixed: Option<bool>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub value: ComplexContextRestrictionOrExtrension,
 
 }
@@ -45,7 +45,7 @@ pub struct ComplexContent {
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum ComplexContextRestrictionOrExtrension {
     #[default]
@@ -68,13 +68,13 @@ pub enum ComplexContextRestrictionOrExtrension {
  #[yaserde(
      rename = "restriction",
      prefix = "xs",
-     namespace = "xs: http://www.w3.org/2001/XMLSchema"
+     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
  )]
  pub struct ComplexContentRestriction {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub base: Option<QName<BaseType>>, // QName
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -83,10 +83,10 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[yaserde(rename = "openContet", prefix = "xs")]
     pub open_context: Option<OpenContent>,
  
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub  attribute: AttributeType,
 
     #[yaserde(rename = "assert", prefix = "xs")]
@@ -106,13 +106,13 @@ pub enum ComplexContextRestrictionOrExtrension {
  #[yaserde(
      rename = "extension",
      prefix = "xs",
-     namespace = "xs: http://www.w3.org/2001/XMLSchema"
+     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
  )]
  pub struct ComplexContentExtension{
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub base: Option<QName<BaseType>>, // QName
  
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
  
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -121,10 +121,10 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[yaserde(rename = "openContet", prefix = "xs")]
     pub open_context: Option<OpenContent>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub attribute: AttributeType,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
 
     #[yaserde(rename = "assert", prefix = "xs")]
@@ -142,16 +142,16 @@ pub enum ComplexContextRestrictionOrExtrension {
 #[yaserde(
     rename = "simpleContent",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct SimpleContent {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub value: SimpleContextRestrictionOrExtrension,
 }
 
@@ -159,7 +159,7 @@ pub struct SimpleContent {
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum SimpleContextRestrictionOrExtrension {
     #[default]
@@ -182,13 +182,13 @@ pub enum SimpleContextRestrictionOrExtrension {
 #[yaserde(
     rename = "restriction",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct SimpleContentRestriction {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub base: Option<QName<BaseType>>, // QName
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -236,7 +236,7 @@ pub struct SimpleContentRestriction {
     #[yaserde(rename = "assertion", prefix = "xs")]
     pub assertion: Vec<Assertion>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub attribute: AttributeType,
 
     #[yaserde(rename = "assert", prefix = "xs")]
@@ -255,19 +255,19 @@ pub struct SimpleContentRestriction {
 #[yaserde(
     rename = "extension",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct SimpleContentExtension{
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub base: Option<QName<BaseType>>, // QName
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub attribute: AttributeType,
 
     #[yaserde(rename = "assert", prefix = "xs")]
@@ -286,13 +286,13 @@ pub struct SimpleContentExtension{
 #[yaserde(
     rename = "openContent",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct OpenContent {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub mode: Option<Mode>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]

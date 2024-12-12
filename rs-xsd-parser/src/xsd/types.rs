@@ -13,7 +13,7 @@ use super::common_type::QName;
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum ComplexTypeContent{
     #[default]
@@ -49,40 +49,40 @@ pub enum ComplexTypeContent{
 #[yaserde(
     rename = "complexType",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct ComplexType {
-    #[yaserde(attribute, rename = "abstract", default = "default_false")]
+    #[yaserde(attribute = true, rename = "abstract", default = "default_false")]
     pub abstract_v: bool,
 
-    #[yaserde(attribute, rename = "block")]
+    #[yaserde(attribute = true, rename = "block")]
     pub block: Option<String>,
 
-    #[yaserde(attribute, rename = "final")]
+    #[yaserde(attribute = true, rename = "final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub mixed: Option<bool>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute, rename = "defaultAttributesApply", default = "default_true")]
+    #[yaserde(attribute = true, rename = "defaultAttributesApply", default = "default_true")]
     pub default_attributes_apply: bool,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub content: ComplexTypeContent,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub attribute: RefAttributeType,
 
     #[yaserde(rename = "assert", prefix = "xs")]
@@ -93,7 +93,7 @@ pub struct ComplexType {
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum SimpleTypeComponenet {
     #[default]
@@ -119,22 +119,22 @@ pub enum SimpleTypeComponenet {
 #[yaserde(
     rename = "simpleType",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct SimpleType {
-    #[yaserde(attribute, rename = "final")]
+    #[yaserde(attribute = true, rename = "final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>, // NCName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub restriction: SimpleTypeComponenet
 }
 
@@ -150,13 +150,13 @@ pub struct SimpleType {
 #[yaserde(
     rename = "restriction",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct SimpleTypeRestriction {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub base: Option<QName<BaseType>>, // QName
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -222,13 +222,13 @@ pub struct SimpleTypeRestriction {
 #[yaserde(
     rename = "list",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct List {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "itemType")]
+    #[yaserde(attribute = true, rename = "itemType")]
     pub item_type: Option<String>, // QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -250,13 +250,13 @@ pub struct List {
 #[yaserde(
     rename = "union",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Union {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "memberTypes")]
+    #[yaserde(attribute = true, rename = "memberTypes")]
     pub member_types: Vec<String>, // List of QName
 
     #[yaserde(rename = "annotation", prefix = "xs")]

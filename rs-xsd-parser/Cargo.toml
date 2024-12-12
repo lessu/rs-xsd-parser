@@ -7,7 +7,6 @@ authors = ["Mingyi Li<lessu@163.com>"]
 [dependencies]
 log = "0.4"
 xml-rs = "0.8"
-# yaserde = { git = "https://github.com/lessu/yaserde.git", version = "0.11", features = ["yaserde_derive"] }
-yaserde = { path = "../../yaserde/yaserde", version = "0.11", features = ["yaserde_derive"] }
+yaserde = { git = "https://github.com/media-io/yaserde.git", version = "0.12", features = ["yaserde_derive"] }
 clap = { version = "4.0", features = ["derive"] }
 rs-xsd-parser-derive = { path ="../rs-xsd-parser-derive" }

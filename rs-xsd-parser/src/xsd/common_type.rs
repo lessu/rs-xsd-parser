@@ -1,6 +1,6 @@
 // use std::{fmt::Write};
 
-use std::{fmt::Write, marker::PhantomData};
+use std::{fmt::{Display, Write}, marker::PhantomData};
 
 use yaserde::YaDeserialize;
 
@@ -72,6 +72,11 @@ impl<T> YaDeserialize for QName<T>{
         }else{
             Err(res.err().unwrap())
         }
+    }
+}
+impl<T> Display for QName<T>{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.value)
     }
 }
 

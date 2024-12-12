@@ -22,16 +22,16 @@ use crate::xsd::{
 #[yaserde(
     rename = "all",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct All {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs", default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_u32_1")]
     pub max_occurs: u32,
 
-    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "minOccurs", default = "default_u32_1")]
     pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -59,16 +59,16 @@ pub struct All {
 #[yaserde(
     rename = "choice",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Choice {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs",default = "default_max_occurs")]
+    #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs",default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "minOccurs",default = "default_u32_1")]
     pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
@@ -103,16 +103,16 @@ pub struct Choice {
 #[yaserde(
     rename = "sequence",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Sequence {
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs",default = "default_max_occurs")]
+    #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute, rename = "minOccurs",default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "minOccurs",default = "default_u32_1")]
     pub min_occurs: u32,
 
     #[yaserde(rename = "annotation", prefix = "xs")]

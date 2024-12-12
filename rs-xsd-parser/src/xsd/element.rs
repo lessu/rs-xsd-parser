@@ -17,7 +17,7 @@ use super::types::Types;
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub enum TypeComponent{
     #[default]
@@ -56,58 +56,58 @@ pub enum TypeComponent{
 #[yaserde(
     rename = "element",
     prefix = "xs",
-    namespace = "xs: http://www.w3.org/2001/XMLSchema"
+    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
 )]
 pub struct Element {
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub abstract_v: bool,
 
-    #[yaserde(attribute, rename = "block")]
+    #[yaserde(attribute = true, rename = "block")]
     pub block: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub default: Option<String>,
 
-    #[yaserde(attribute, rename = "final")]
+    #[yaserde(attribute = true, rename = "final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub fixed: Option<String>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub form: Option<Form>,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute, rename = "maxOccurs", default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_u32_1")]
     pub max_occurs: u32,
 
-    #[yaserde(attribute, rename = "minOccurs", default = "default_u32_1")]
+    #[yaserde(attribute = true, rename = "minOccurs", default = "default_u32_1")]
     pub min_occurs: u32,
 
-    #[yaserde(attribute)]
+    #[yaserde(attribute = true)]
     pub name: Option<String>,
 
-    #[yaserde(attribute,default = "default_false")]
+    #[yaserde(attribute = true,default = "default_false")]
     pub nillable: bool,
 
-    #[yaserde(attribute, rename = "ref")]
+    #[yaserde(attribute = true, rename = "ref")]
     pub ref_v: Option<String>,
 
-    #[yaserde(attribute, rename = "substitutionGroup")]
+    #[yaserde(attribute = true, rename = "substitutionGroup")]
     pub substitution_group: Vec<String>,
 
-    #[yaserde(attribute, rename = "targetNamespace")]
+    #[yaserde(attribute = true, rename = "targetNamespace")]
     pub target_namespace: Option<String>,
 
-    #[yaserde(attribute, rename = "type")]
+    #[yaserde(attribute = true, rename = "type")]
     pub type_v: Option<QName<Types>>,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten)]
+    #[yaserde(flatten = true)]
     pub type_component: TypeComponent,
 
     #[yaserde(rename = "alternative", prefix = "xs")]
