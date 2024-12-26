@@ -1,5 +1,3 @@
-use std::default;
-
 use crate::xsd::default_fn::*;
 
 use yaserde::*;
