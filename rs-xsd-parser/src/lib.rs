@@ -1,5 +1,4 @@
 pub mod xsd;
-pub mod flatten;
 
 #[macro_export]
 macro_rules! impl_string_based {
