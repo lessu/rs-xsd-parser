@@ -88,4 +88,22 @@ impl Xsd {
         Xsd::new(String::from_str(name).unwrap(), &content)
     }
 
+    pub fn resolve_namespace<'a>(&'a self,name: &'a str) -> Result<(&'a str,&'a str),String> {
+        if let Some(r) =  name.split_once(':'){
+            if let Some(namespace) = self.namespace.get(r.0) {
+                Ok((namespace, r.1))
+            }else{
+                Err("unknown namespace".to_string())
+            }
+        } else {
+            return match self.schema.target_namespace.as_ref() {
+                Some(namespace) => {
+                    Ok((namespace, name))
+                }
+                _ => {
+                    Ok(("", name))
+                }
+            }
+        }
+    }
 }

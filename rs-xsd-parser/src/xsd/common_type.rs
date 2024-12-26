@@ -1,10 +1,6 @@
-// use std::{fmt::Write};
-
 use std::{fmt::{Display, Write}, marker::PhantomData};
 
 use yaserde::YaDeserialize;
-
-use super::attribute::Attribute;
 
 fn ya_xml_parse_string<R: std::io::Read>(type_name:&str ,reader: &mut yaserde::de::Deserializer<R>) -> Result<String,String>{
     let mut ret = String::new();
