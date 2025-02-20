@@ -56,10 +56,10 @@ pub struct Group {
 pub enum GroupComponenet {
     #[default]
     None,
-    #[yaserde(rename = "All", prefix = "xs")]
+    #[yaserde(rename = "all", prefix = "xs")]
     All(All),
-    #[yaserde(rename = "Choice", prefix = "xs")]
+    #[yaserde(rename = "choice", prefix = "xs")]
     Choice(Choice),
-    #[yaserde(rename = "Sequence", prefix = "xs")]
+    #[yaserde(rename = "sequence", prefix = "xs")]
     Sequence(Sequence),
 }
