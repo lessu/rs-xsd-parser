@@ -56,6 +56,22 @@ pub enum AtomicType{
     Time
 }
 
+pub enum NativeType{
+    I8,
+    I16,
+    I32,
+    I64,
+    U8,
+    U16,
+    U32,
+    U64,
+    Num,
+    F32,
+    F64,
+    String,
+    Boolean
+}
+
 impl AtomicType {
     pub fn from_str_type(atomic_type: &str) -> Self {
         if atomic_type.is_empty() {
@@ -112,55 +128,55 @@ impl AtomicType {
         }
     }
 
-    pub fn to_native_type_simple(&self) -> &str {
+    pub fn to_native_type_simple(&self) -> NativeType {
         match self {
-            AtomicType::Any => "String",
-            AtomicType::String => "String",
-            AtomicType::Interger => "i32",
-            AtomicType::Byte => "i8",
-            AtomicType::Short => "i16",
-            AtomicType::Int => "i32",
-            AtomicType::Long => "i64",
-            AtomicType::Float => "f32",
-            AtomicType::Double => "f64",
-            AtomicType::Boolean => "bool",
-            AtomicType::Date => "String",
-            AtomicType::DateTime => "String",
-            AtomicType::DateTimeStamp => "u64",
-            AtomicType::Decimal => "f64", // Assuming Decimal is represented as f64
-            AtomicType::AnyURI => "String", // Assuming URI is represented as a String
-            AtomicType::Base64Binary => "String", // Base64Binary as a String
-            AtomicType::HexBinary => "String", // HexBinary as a String
-            AtomicType::GDay => "String", // GDay as a String
-            AtomicType::GMonth => "String", // GMonth as a String
-            AtomicType::GMonthDay => "String", // GMonthDay as a String
-            AtomicType::GYear => "String", // GYear as a String
-            AtomicType::GYearMonth => "String", // GYearMonth as a String
-            AtomicType::Duration => "String", // Duration as a String
-            AtomicType::Time => "String", // Time as a String
-            AtomicType::NormalizedString => "String", // NormalizedString as a String
-            AtomicType::Token => "String", // Token as a String
-            AtomicType::Language => "String", // Language as a String
-            AtomicType::Name => "String", // Name as a String
-            AtomicType::NCName => "String", // NCName as a String
-            AtomicType::ENTITY => "String", // ENTITY as a String
-            AtomicType::ID => "String", // ID as a String
-            AtomicType::IDREF => "String", // IDREF as a String
-            AtomicType::NMTOKEN => "String", // NMTOKEN as a String
-            AtomicType::NonNegativeInteger => "u64", // Non-negative integers as u64
-            AtomicType::PositiveInteger => "u64", // Positive integers as u64
-            AtomicType::UnsignedLong => "u64",
-            AtomicType::UnsignedInt => "u32",
-            AtomicType::UnsignedShort => "u16",
-            AtomicType::UnsignedByte => "u8",
-            AtomicType::NonPositiveInteger => "i64", // Non-positive integers as i64
-            AtomicType::NegativeInteger => "i64", // Negative integers as i64
-            AtomicType::NOTATION => "String", // NOTATION as a String
-            AtomicType::QName => "String", // QName as a String
-            AtomicType::DayTimeDuration => "String", // DayTimeDuration as a String
-            AtomicType::YearMonthDuration => "String", // YearMonthDuration as a String
-            AtomicType::None => "String",
-            AtomicType::Other=> "String"
+            AtomicType::Any => NativeType::String,
+            AtomicType::String => NativeType::String,
+            AtomicType::Interger => NativeType::I32,
+            AtomicType::Byte => NativeType::I8,
+            AtomicType::Short => NativeType::I16,
+            AtomicType::Int => NativeType::I32,
+            AtomicType::Long => NativeType::I64,
+            AtomicType::Float => NativeType::F32,
+            AtomicType::Double => NativeType::F64,
+            AtomicType::Boolean => NativeType::Boolean,
+            AtomicType::Date => NativeType::String,
+            AtomicType::DateTime => NativeType::String,
+            AtomicType::DateTimeStamp => NativeType::U64,
+            AtomicType::Decimal => NativeType::Num,
+            AtomicType::AnyURI => NativeType::String, // Assuming URI is represented as a String
+            AtomicType::Base64Binary => NativeType::String, // Base64Binary as a String
+            AtomicType::HexBinary => NativeType::String, // HexBinary as a String
+            AtomicType::GDay => NativeType::String, // GDay as a String
+            AtomicType::GMonth => NativeType::String, // GMonth as a String
+            AtomicType::GMonthDay => NativeType::String, // GMonthDay as a String
+            AtomicType::GYear => NativeType::String, // GYear as a String
+            AtomicType::GYearMonth => NativeType::String, // GYearMonth as a String
+            AtomicType::Duration => NativeType::String, // Duration as a String
+            AtomicType::Time => NativeType::String, // Time as a String
+            AtomicType::NormalizedString => NativeType::String, // NormalizedString as a String
+            AtomicType::Token => NativeType::String, // Token as a String
+            AtomicType::Language => NativeType::String, // Language as a String
+            AtomicType::Name => NativeType::String, // Name as a String
+            AtomicType::NCName => NativeType::String, // NCName as a String
+            AtomicType::ENTITY => NativeType::String, // ENTITY as a String
+            AtomicType::ID => NativeType::String, // ID as a String
+            AtomicType::IDREF => NativeType::String, // IDREF as a String
+            AtomicType::NMTOKEN => NativeType::String, // NMTOKEN as a String
+            AtomicType::NonNegativeInteger => NativeType::U64, // Non-negative integers as u64
+            AtomicType::PositiveInteger => NativeType::U64, // Positive integers as u64
+            AtomicType::UnsignedLong => NativeType::U64,
+            AtomicType::UnsignedInt => NativeType::U32,
+            AtomicType::UnsignedShort => NativeType::U16,
+            AtomicType::UnsignedByte => NativeType::U8,
+            AtomicType::NonPositiveInteger => NativeType::I64, // Non-positive integers as i64
+            AtomicType::NegativeInteger => NativeType::I64, // Negative integers as i64
+            AtomicType::NOTATION => NativeType::String, // NOTATION as a String
+            AtomicType::QName => NativeType::String, // QName as a String
+            AtomicType::DayTimeDuration => NativeType::String, // DayTimeDuration as a String
+            AtomicType::YearMonthDuration => NativeType::String, // YearMonthDuration as a String
+            AtomicType::None => NativeType::String,
+            AtomicType::Other=> NativeType::String
         }
     }
 
