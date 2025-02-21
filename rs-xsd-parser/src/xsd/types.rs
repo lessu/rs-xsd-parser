@@ -3,11 +3,11 @@ use crate::xsd::default_fn::*;
 use crate::xsd::{
     content::{SimpleContent, ComplexContent, OpenContent},
     annotation::Annotation,
-    attribute::RefAttributeType,
     type_def::{Assert, Assertion, ComplexChildren, Enumeration, ExplicitTimezone, FractionDigits, Length, MaxExclusive, MaxInclusive, MaxLength, MinExclusive, MinInclusive, MinLength, Pattern, TotalDigits, WhiteSpace}
 };
 
 use super::atomic_type::{BaseType};
+use super::attribute::{AnyAttribute, Attribute, RefAttributeGroup};
 use super::common_type::QName;
 
 #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
@@ -82,8 +82,14 @@ pub struct ComplexType {
     #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
 
-    #[yaserde(flatten = true)]
-    pub attribute: RefAttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<RefAttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 
     #[yaserde(rename = "assert", prefix = "xs")]
     pub assert: Vec<Assert>

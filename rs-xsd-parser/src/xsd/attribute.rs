@@ -8,38 +8,6 @@ use crate::xsd::{
 
 use super::{common_type::QName, types::Types};
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
-pub struct AttributeType{
-    #[yaserde(rename = "attribute", prefix = "xs")]
-    pub attributes: Vec<Attribute>,
-
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
-    pub attribute_groups: Vec<AttributeGroup>,
-
-    #[yaserde(rename = "anyAttribute", prefix = "xs")]
-    pub any_attributes: Option<AnyAttribute>,
-}
-
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
-pub struct RefAttributeType{
-    #[yaserde(rename = "attribute", prefix = "xs")]
-    pub attributes: Vec<Attribute>,
-
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
-    pub attribute_groups: Vec<RefAttributeGroup>,
-
-    #[yaserde(rename = "anyAttribute", prefix = "xs")]
-    pub any_attributes: Option<AnyAttribute>,
-}
-
 /**
  * <attribute
  *  default = string
@@ -135,8 +103,14 @@ pub struct AttributeGroup {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
-    pub attributes: RefAttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<RefAttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 }
 /**
  * <attributeGroup

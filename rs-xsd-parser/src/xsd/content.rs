@@ -3,12 +3,11 @@ use yaserde::*;
 use crate::xsd::{
     annotation::Annotation,
     any::Any,
-    attribute::AttributeType,
     type_def::{Assert, Assertion, ComplexChildren, Enumeration, FractionDigits, Length, MaxExclusive, MaxInclusive, MaxLength, MinExclusive, MinInclusive, MinLength, Pattern, TotalDigits, WhiteSpace},
     types::SimpleType
 };
 
-use super::{atomic_type::BaseType, common_type::QName};
+use super::{atomic_type::BaseType, attribute::{AnyAttribute, Attribute, AttributeGroup}, common_type::QName};
 
 
 
@@ -86,8 +85,14 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
 
-    #[yaserde(flatten = true)]
-    pub  attribute: AttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<AttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 
     #[yaserde(rename = "assert", prefix = "xs")]
     pub  assert: Vec<Assert>,
@@ -121,8 +126,14 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[yaserde(rename = "openContet", prefix = "xs")]
     pub open_context: Option<OpenContent>,
 
-    #[yaserde(flatten = true)]
-    pub attribute: AttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<AttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 
     #[yaserde(flatten = true)]
     pub complex_children: ComplexChildren,
@@ -236,8 +247,14 @@ pub struct SimpleContentRestriction {
     #[yaserde(rename = "assertion", prefix = "xs")]
     pub assertion: Vec<Assertion>,
 
-    #[yaserde(flatten = true)]
-    pub attribute: AttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<AttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 
     #[yaserde(rename = "assert", prefix = "xs")]
     pub assert: Vec<Assert>,
@@ -267,8 +284,14 @@ pub struct SimpleContentExtension{
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
-    pub attribute: AttributeType,
+    #[yaserde(rename = "attribute", prefix = "xs")]
+    pub attributes: Vec<Attribute>,
+
+    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    pub attribute_groups: Vec<AttributeGroup>,
+
+    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    pub any_attributes: Option<AnyAttribute>,
 
     #[yaserde(rename = "assert", prefix = "xs")]
     pub assert: Vec<Assert>,
