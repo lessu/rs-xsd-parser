@@ -14,3 +14,6 @@ pub fn default_u32_1() -> u32 {
 pub fn default_max_occurs() -> MaxOccurences{
     MaxOccurences::default()
 }
+pub fn default_min_occurs() -> MaxOccurences{
+    MaxOccurences::default()
+}

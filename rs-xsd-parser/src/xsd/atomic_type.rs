@@ -1,3 +1,5 @@
+use std::cell::Cell;
+
 /**
  *  AnyType,
  *   -- anySimpleType,
@@ -77,7 +79,19 @@ impl AtomicType {
         if atomic_type.is_empty() {
             return AtomicType::None;
         }
-        match atomic_type.to_lowercase().as_str() {
+        let comps: Vec<&str> = atomic_type.split(":").collect();
+        let type_name = Cell::new(comps[1]);
+        if comps.len() == 2{
+            if comps[0] != "xsd" {
+                return AtomicType::None;
+            }else{
+                type_name.replace(comps[1]);
+            }
+        }else{
+            return AtomicType::None;
+        }
+
+        match type_name.take().to_lowercase().as_str() {
             "anyatomic" => AtomicType::Any,
             "anysimple" => AtomicType::Any,
             "anyuri" => AtomicType::AnyURI,

@@ -1,11 +1,11 @@
 use yaserde::*;
-
+use crate::xsd::default_fn::*;
 use crate::xsd::{
     sequence::{All, Choice, Sequence},
     annotation::Annotation,
 };
 
-use super::common_type::QName;
+use super::{common_type::QName, max_occurences::MaxOccurences};
 
 
 /**
@@ -29,11 +29,11 @@ pub struct Group {
     #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs")]
-    pub max_occurs: Option<u32>,
+    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs")]
-    pub min_occurs: Option<u32>, 
+    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    pub min_occurs: MaxOccurences, 
 
     #[yaserde(attribute = true)]
     pub name: Option<String>, // NCName

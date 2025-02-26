@@ -28,11 +28,11 @@ pub struct All {
     #[yaserde(attribute = true)]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_u32_1")]
-    pub max_occurs: u32,
+    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs", default = "default_u32_1")]
-    pub min_occurs: u32,
+    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    pub min_occurs: MaxOccurences,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -68,8 +68,8 @@ pub struct Choice {
     #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs",default = "default_u32_1")]
-    pub min_occurs: u32,
+    #[yaserde(attribute = true, rename = "minOccurs",default = "default_min_occurs")]
+    pub min_occurs: MaxOccurences,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
@@ -112,8 +112,8 @@ pub struct Sequence {
     #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs",default = "default_u32_1")]
-    pub min_occurs: u32,
+    #[yaserde(attribute = true, rename = "minOccurs",default = "default_min_occurs")]
+    pub min_occurs: MaxOccurences,
 
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,

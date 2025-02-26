@@ -6,7 +6,7 @@ use crate::xsd::{
     type_def::{Assert, Assertion, ComplexChildren, Enumeration, ExplicitTimezone, FractionDigits, Length, MaxExclusive, MaxInclusive, MaxLength, MinExclusive, MinInclusive, MinLength, Pattern, TotalDigits, WhiteSpace}
 };
 
-use super::atomic_type::{BaseType};
+use super::atomic_type::BaseType;
 use super::attribute::{AnyAttribute, Attribute, RefAttributeGroup};
 use super::common_type::QName;
 
