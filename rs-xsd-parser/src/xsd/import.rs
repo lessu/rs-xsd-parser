@@ -1,4 +1,4 @@
-use yaserde::*;
+use serde::Deserialize;
 
 use crate::xsd::annotation::Annotation;
 /**
@@ -10,22 +10,18 @@ use crate::xsd::annotation::Annotation;
  *    Content: (annotation?)
  * </import>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename="schema",
-    prefix="xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" },
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Import {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@namespace")]
     pub namespace: Option<String>,
 
-    #[yaserde(rename = "schemaLocation", attribute = true)]
+    #[serde(rename = "@schemaLocation")]
     pub schema_location: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix="xs")]
+    #[serde(default)]
     pub annotations: Vec<Annotation>
 }

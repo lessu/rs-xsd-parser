@@ -1,43 +1,6 @@
-use std::{fmt::{Display, Write}, marker::PhantomData};
+use std::{fmt::{Display}, marker::PhantomData};
 
-use yaserde::YaDeserialize;
-
-fn ya_xml_parse_string<R: std::io::Read>(type_name:&str ,reader: &mut yaserde::de::Deserializer<R>) -> Result<String,String>{
-    let mut ret = String::new();
-    let mut err = None;
-    let mut level:u32 = 0;
-    loop {
-        let event = reader.peek()?;
-        match event {
-            xml::reader::XmlEvent::StartElement { name:_, attributes:_, namespace:_ } => {
-                if level == 0 {
-                    level += 1;
-                }else{
-                    err = Some(format!("{} should be a text, but get a complex type", type_name).to_string());
-                    break;
-                }
-            }
-            xml::reader::XmlEvent::EndElement { name: _ } => {
-                level -= 1;
-                if level == 0 {
-                    break;
-                }
-            }
-            xml::reader::XmlEvent::Characters(ref text_content) => {
-                ret.write_str(text_content).unwrap();
-            }
-            _ => {
-                // pass
-            }
-        }
-        reader.next_event()?;
-    }
-    if let Some(err_str) = err {
-        Err(err_str)
-    } else {
-        Ok(ret)
-    }
-}
+use serde::{Deserialize, Deserializer};
 
 /**
  * A QName is a name with an optional namespace qualification, 
@@ -57,19 +20,19 @@ impl<T> QName<T>{
         &self.value
     }
 }
-impl<T> YaDeserialize for QName<T>{
-    fn deserialize<R: std::io::Read>(reader: &mut yaserde::de::Deserializer<R>) -> Result<Self, String> {
-        let res = ya_xml_parse_string("QName",reader);
-        if res.is_ok() {
-            Ok(QName::<T>{
-                __own: PhantomData::<T>,
-                value: res.ok().unwrap()
-            })
-        }else{
-            Err(res.err().unwrap())
-        }
+
+impl<'de, T> Deserialize<'de> for QName<T>{
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de> {
+        let s = String::deserialize(deserializer)?;
+        Ok(QName::<T>{
+            __own: PhantomData::<T>,
+            value: s
+        })
     }
 }
+
 impl<T> Display for QName<T>{
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(&self.value)

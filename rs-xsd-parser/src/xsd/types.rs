@@ -1,4 +1,4 @@
-use yaserde::*;
+use serde::Deserialize;
 use crate::xsd::default_fn::*;
 use crate::xsd::{
     content::{SimpleContent, ComplexContent, OpenContent},
@@ -10,22 +10,19 @@ use super::atomic_type::BaseType;
 use super::attribute::{AnyAttribute, Attribute, RefAttributeGroup};
 use super::common_type::QName;
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum ComplexTypeContent{
     #[default]
     None,
 
-    #[yaserde(rename = "simpleContent", prefix = "xs")]
+    #[serde(rename = "simpleContent")]
     SimpleContent(SimpleContent),
 
-    #[yaserde(rename = "complexContent", prefix = "xs")]
+    #[serde(rename = "complexContent")]
     ComplexContent(ComplexContent),
 
-    #[yaserde(rename = "openContent", prefix = "xs")]
+    #[serde(rename = "openContent")]
     OpenContent(OpenContent),
     
 }
@@ -45,70 +42,63 @@ pub enum ComplexTypeContent{
  * Content means simpleContent | complexContent | openContent are optional, and only one will apear
  * if simpleContent or complexContent, then you can't add other content (like gourp, attribute, etc)
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "complexType",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ComplexType {
-    #[yaserde(attribute = true, rename = "abstract", default = "default_false")]
+    #[serde(rename = "@abstract", default = "default_false")]
     pub abstract_v: bool,
 
-    #[yaserde(attribute = true, rename = "block")]
+    #[serde(rename = "@block")]
     pub block: Option<String>,
 
-    #[yaserde(attribute = true, rename = "final")]
+    #[serde(rename = "@final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@mixed")]
     pub mixed: Option<bool>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true, rename = "defaultAttributesApply", default = "default_true")]
+    #[serde(rename = "@defaultAttributesApply", default = "default_true")]
     pub default_attributes_apply: bool,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
+    #[serde(flatten)]
     pub content: ComplexTypeContent,
 
-    #[yaserde(flatten = true)]
+    #[serde(flatten)]
     pub complex_children: ComplexChildren,
 
-    #[yaserde(rename = "attribute", prefix = "xs")]
+    #[serde(rename = "attribute")]
     pub attributes: Vec<Attribute>,
 
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    #[serde(rename = "attributeGroup")]
     pub attribute_groups: Vec<RefAttributeGroup>,
 
-    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 
-    #[yaserde(rename = "assert", prefix = "xs")]
+    #[serde(rename = "assert")]
     pub assert: Vec<Assert>
 
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum SimpleTypeComponenet {
     #[default]
     None,
-    #[yaserde(rename = "restriction", prefix = "xs")]
+    #[serde(rename = "restriction")]
     Restriction(SimpleTypeRestriction),
-    #[yaserde(rename = "list", prefix = "xs")]
+    #[serde(rename = "list")]
     List(List),
-    #[yaserde(rename = "union", prefix = "xs")]
+    #[serde(rename = "union")]
     Union(Union),
 }
 
@@ -121,26 +111,22 @@ pub enum SimpleTypeComponenet {
  *    Content: (annotation?, (restriction | list | union))
  * </simpleType>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "simpleType",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SimpleType {
-    #[yaserde(attribute = true, rename = "final")]
+    #[serde(rename = "@final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>, // NCName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
+    #[serde(rename = "$value")]
     pub restriction: SimpleTypeComponenet
 }
 
@@ -152,66 +138,62 @@ pub struct SimpleType {
  *   Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | explicitTimezone | {any with namespace: ##other})*))
  * </restriction>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "restriction",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct SimpleTypeRestriction {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@base")]
     pub base: Option<QName<BaseType>>, // QName
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
     // Use Vec to avoid nesting reference
-    #[yaserde(rename = "simpleType", prefix = "xs")]
+    #[serde(rename = "simpleType")]
     pub simple_type: Vec<SimpleType>,
 
-    #[yaserde(rename = "minExclusive", prefix = "xs")]
+    #[serde(rename = "minExclusive")]
     pub min_exclusive: Option<MinExclusive>,
 
-    #[yaserde(rename = "minInclusive", prefix = "xs")]
+    #[serde(rename = "minInclusive")]
     pub min_inclusive: Option<MinInclusive>,
 
-    #[yaserde(rename = "maxExclusive", prefix = "xs")]
+    #[serde(rename = "maxExclusive")]
     pub max_exclusive: Option<MaxExclusive>,
 
-    #[yaserde(rename = "maxInclusive", prefix = "xs")]
+    #[serde(rename = "maxInclusive")]
     pub max_inclusive: Option<MaxInclusive>,
 
-    #[yaserde(rename = "totalDigits", prefix = "xs")]
+    #[serde(rename = "totalDigits")]
     pub total_digits: Option<TotalDigits>,
 
-    #[yaserde(rename = "fractionDigits", prefix = "xs")]
+    #[serde(rename = "fractionDigits")]
     pub fraction_digits: Option<FractionDigits>,
 
-    #[yaserde(rename = "length", prefix = "xs")]
+    #[serde(rename = "length")]
     pub length: Option<Length>,
 
-    #[yaserde(rename = "minLength", prefix = "xs")]
+    #[serde(rename = "minLength")]
     pub min_length: Option<MinLength>,
 
-    #[yaserde(rename = "maxLength", prefix = "xs")]
+    #[serde(rename = "maxLength")]
     pub max_length: Option<MaxLength>,
 
-    #[yaserde(rename = "enumeration", prefix = "xs")]
+    #[serde(rename = "enumeration")]
     pub enumeration: Vec<Enumeration>,
 
-    #[yaserde(rename = "whiteSpace", prefix = "xs")]
+    #[serde(rename = "whiteSpace")]
     pub white_space: Vec<WhiteSpace>,
 
-    #[yaserde(rename = "pattern", prefix = "xs")]
+    #[serde(rename = "pattern")]
     pub pattern: Vec<Pattern>,
 
-    #[yaserde(rename = "assertion", prefix = "xs")]
+    #[serde(rename = "assertion")]
     pub assertion: Vec<Assertion>,
 
-    #[yaserde(rename = "explicitTimezone", prefix = "xs")]
+    #[serde(rename = "explicitTimezone")]
     pub explicit_timezone: Vec<ExplicitTimezone>,
 
 }
@@ -224,24 +206,20 @@ pub struct SimpleTypeRestriction {
  *    Content: (annotation?, simpleType?)
  *</list>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "list",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct List {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "itemType")]
+    #[serde(rename = "@itemType")]
     pub item_type: Option<String>, // QName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
     // use Vec to avoid nesting reference
-    #[yaserde(rename = "simpleType", prefix = "xs")]
+    #[serde(rename = "simpleType")]
     pub simple_type: Vec<SimpleType>,
 }
 /**
@@ -252,30 +230,27 @@ pub struct List {
  *    Content: (annotation?, simpleType*)
  *</union>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "union",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Union {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "memberTypes")]
+    #[serde(rename = "@memberTypes")]
     pub member_types: Vec<String>, // List of QName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "simpleType")]
+    #[serde(rename = "simpleType")]
     pub simple_types: Vec<SimpleType>,
 }
 
 
 
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Types{
     None,
     Simple(SimpleType),

@@ -1,4 +1,5 @@
-use yaserde::*;
+use serde::Deserialize;
+
 use crate::xsd::default_fn::*;
 
 use crate::xsd::{
@@ -20,34 +21,30 @@ use crate::xsd::{
  *     Content: (annotation?)
  * </any>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "any",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Any {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs", default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs", default = "default_min_occurs")]
     pub min_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@namespace")]
     pub namespace: Option<String>,
 
-    #[yaserde(attribute = true, rename = "notNamespace")]
+    #[serde(rename = "@notNamespace")]
     pub not_namespace: Vec<String>,
 
-    #[yaserde(attribute = true, rename = "notQName")]
+    #[serde(rename = "@notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute = true, rename = "processContents")]
+    #[serde(rename = "@processContents")]
     pub process_contents: ProcessContents,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }

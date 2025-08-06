@@ -14,57 +14,55 @@ pub mod default_fn;
 pub mod atomic_type;
 pub mod common_type;
 use std::fs;
-use std::io::Cursor;
 use std::str::FromStr;
-use xml::namespace::Namespace;
-use xml::reader::XmlEvent;
-use xml::EventReader;
-use yaserde::de::from_str;
-
+use quick_xml;
 
 #[derive(Clone, Debug)]
 pub struct Xsd {
     pub name: String,
-    pub namespace: Namespace,
+    // pub namespace: Namespace,
     pub schema: schema::Schema,
 }
 
 impl Xsd {
-    pub fn read_namespace(content: &str) -> Namespace {
-        let cursor = Cursor::new(content);
-        let parser = EventReader::new(cursor);
-        let mut xmlns_map: Option<Namespace> = None;
+    // pub fn read_namespace(content: &str) -> Namespace {
+    //     let cursor = Cursor::new(content);
+    //     let parser = EventReader::new(cursor);
+    //     let mut xmlns_map: Option<Namespace> = None;
 
-        for event in parser {
-            match event {
-                Ok(XmlEvent::StartElement { attributes: _ , name, namespace, ..}) => {
-                    if name.local_name.ends_with("schema"){
-                        xmlns_map = Some(namespace);
-                        break;
-                    }
-                }
-                Err(_) => {
-                    break;
-                }
-                _ => {}
-            }
-        }
+    //     for event in parser {
+    //         match event {
+    //             Ok(XmlEvent::StartElement { attributes: _ , name, namespace, ..}) => {
+    //                 if name.local_name.ends_with("schema"){
+    //                     xmlns_map = Some(namespace);
+    //                     break;
+    //                 }
+    //             }
+    //             Err(_) => {
+    //                 break;
+    //             }
+    //             _ => {}
+    //         }
+    //     }
     
-        xmlns_map.unwrap()
-    }
+    //     xmlns_map.unwrap()
+    // }
 
     pub fn new(
         name: String,
         content: &str,
     ) -> Result<Self, String> {
         // read the namespace info xmlns from root node by xml-rs
-        let schema: schema::Schema = from_str(content)?;
-
-        Ok(Xsd {
-            name,
-            namespace: Xsd::read_namespace(content),
-            schema,
-        })
+        let schema: Result<schema::Schema,_> = quick_xml::de::from_str(content);
+        if let Ok(schema) = schema {
+            return Ok(Xsd {
+                name,
+                // namespace: Xsd::read_namespace(content),
+                schema,
+            });
+        } else {
+            return Err("Faile to load xsd schema".to_string());
+        }
     }
 
     pub fn new_from_file(
@@ -88,22 +86,22 @@ impl Xsd {
         Xsd::new(String::from_str(name).unwrap(), &content)
     }
 
-    pub fn resolve_namespace<'a>(&'a self,name: &'a str) -> Result<(&'a str,&'a str),String> {
-        if let Some(r) =  name.split_once(':'){
-            if let Some(namespace) = self.namespace.get(r.0) {
-                Ok((namespace, r.1))
-            }else{
-                Err("unknown namespace".to_string())
-            }
-        } else {
-            return match self.schema.target_namespace.as_ref() {
-                Some(namespace) => {
-                    Ok((namespace, name))
-                }
-                _ => {
-                    Ok(("", name))
-                }
-            }
-        }
-    }
+    // pub fn resolve_namespace<'a>(&'a self,name: &'a str) -> Result<(&'a str,&'a str),String> {
+    //     if let Some(r) =  name.split_once(':'){
+    //         if let Some(namespace) = self.namespace.get(r.0) {
+    //             Ok((namespace, r.1))
+    //         }else{
+    //             Err("unknown namespace".to_string())
+    //         }
+    //     } else {
+    //         return match self.schema.target_namespace.as_ref() {
+    //             Some(namespace) => {
+    //                 Ok((namespace, name))
+    //             }
+    //             _ => {
+    //                 Ok(("", name))
+    //             }
+    //         }
+    //     }
+    // }
 }

@@ -1,4 +1,4 @@
-use yaserde::*;
+use serde::Deserialize;
 
 use crate::xsd::{
     types::SimpleType,
@@ -24,48 +24,45 @@ use super::{common_type::QName, types::Types};
  *    Content: (annotation?, simpleType?)
  *</attribute>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "attribute",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "camelCase" )]
 pub struct Attribute {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@default")]
     pub default: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@fixed")]
     pub fixed: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@form")]
     pub form: Option<Form>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@targetNamespace")]
     target_namespace: Option<String>,
 
-    #[yaserde(attribute = true, rename = "type")]
+    #[serde(rename = "@type")]
     pub type_v: Option<QName<Types>>,
 
-    #[yaserde(rename = "use", attribute = true, default="default_use")]
+    #[serde(rename = "@use", default="default_use")]
     pub use_v: Use,
 
-    #[yaserde(rename = "ref", attribute = true)]
+    #[serde(rename = "@ref")]
     pub ref_v: Option<QName<Attribute>>,
 
-    #[yaserde(rename = "simpleType", prefix = "xs")]
+    #[serde(rename = "@inheritable")]
+    pub inheritable: Option<bool>,
+
+    #[serde(rename = "simpleType")]
     pub simple_type: Option<SimpleType>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(attribute = true)]
-    pub inheritable: Option<bool>,
 }
 
 
@@ -84,32 +81,27 @@ pub struct Attribute {
  *   Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?))
  * </attributeGroup>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "attributeGroup",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "camelCase" )]
 pub struct AttributeGroup {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>, // NCName
 
-    #[yaserde(attribute = true, rename = "ref")]
+    #[serde(rename = "@ref")]
     pub ref_v: Option<QName<AttributeGroup>>, // QName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "attribute", prefix = "xs")]
+    #[serde(rename = "attribute")]
     pub attributes: Vec<Attribute>,
 
-    #[yaserde(rename = "attributeGroup", prefix = "xs")]
+    #[serde(rename = "attributeGroup")]
     pub attribute_groups: Vec<RefAttributeGroup>,
-
-    #[yaserde(rename = "anyAttribute", prefix = "xs")]
+    #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 }
 /**
@@ -120,22 +112,18 @@ pub struct AttributeGroup {
  *   Content: (annotation?)
  * </attributeGroup>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "attributeGroup",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "camelCase" )]
+
 pub struct RefAttributeGroup {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "ref")]
+    #[serde(rename = "@ref")]
     pub ref_v: Option<QName<AttributeGroup>>, // QName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
-
 }
 fn default_use() -> Use{
   Use::Optional
@@ -152,41 +140,39 @@ fn default_use() -> Use{
  *     Content: (annotation?)
  * </anyAttribute>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "anyAttribute",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "camelCase" )]
+
 pub struct AnyAttribute {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@namespace")]
     pub namespace: Option<String>,
 
-    #[yaserde(attribute = true, rename = "notNamespace")]
+    #[serde(rename = "@notNamespace")]
     pub not_namespace: Vec<String>,
 
-    #[yaserde(attribute = true, rename = "notQName")]
+    #[serde(rename = "@notQName")]
     pub not_qname: Vec<String>,
 
-    #[yaserde(attribute = true, rename = "processContents")]
+    #[serde(rename = "@processContents")]
     pub process_contents: ProcessContents,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
+
 }
 
 
-
-#[derive(Clone, Debug, Default, PartialEq, YaDeserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Use {
     #[default]
-    #[yaserde(rename = "optional")]
+    #[serde(rename = "optional")]
     Optional,
-    #[yaserde(rename = "prohibited")]
+    #[serde(rename = "prohibited")]
     Prohibited,
-    #[yaserde(rename = "required")]
+    #[serde(rename = "required")]
     Required,
 }

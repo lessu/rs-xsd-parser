@@ -1,4 +1,5 @@
-use yaserde::*;
+use serde::Deserialize;
+
 use crate::xsd::default_fn::*;
 use crate::xsd::{
     sequence::{All, Choice, Sequence},
@@ -19,47 +20,37 @@ use super::{common_type::QName, max_occurences::MaxOccurences};
  *     Content: (annotation?, (all | choice | sequence)?)
  * </group>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "group",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Group {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs", default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs", default = "default_min_occurs")]
     pub min_occurs: MaxOccurences, 
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>, // NCName
 
-    #[yaserde(attribute = true, rename = "ref")]
+    #[serde(rename = "@ref")]
     pub ref_v: Option<QName<Group>>, // QName
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
+    #[serde(rename = "$value" )]
     pub componenet: GroupComponenet
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum GroupComponenet {
     #[default]
     None,
-    #[yaserde(rename = "all", prefix = "xs")]
     All(All),
-    #[yaserde(rename = "choice", prefix = "xs")]
     Choice(Choice),
-    #[yaserde(rename = "sequence", prefix = "xs")]
     Sequence(Sequence),
 }

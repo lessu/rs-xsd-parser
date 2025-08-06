@@ -1,4 +1,4 @@
-use yaserde::*;
+use serde::Deserialize;
 use crate::xsd::default_fn::*;
 
 use crate::xsd::{
@@ -15,19 +15,12 @@ use crate::xsd::{
 use super::common_type::QName;
 use super::max_occurences::MaxOccurences;
 use super::types::Types;
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum TypeComponent{
     #[default]
     None,
-
-    #[yaserde(rename = "simpleType", prefix = "xs")]
     SimpleType(SimpleType),
-    
-    #[yaserde(rename = "complexType", prefix = "xs")]
     ComplexType(ComplexType)
 
 }
@@ -53,74 +46,70 @@ pub enum TypeComponent{
  *    Content: (annotation?, ((simpleType | complexType)?, alternative*, (unique | key | keyref)*))
  * </element>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "element",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Element {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "@abstract", default = "default_false")]
     pub abstract_v: bool,
 
-    #[yaserde(attribute = true, rename = "block")]
+    #[serde(rename = "@block")]
     pub block: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@default")]
     pub default: Option<String>,
 
-    #[yaserde(attribute = true, rename = "final")]
+    #[serde(rename = "@final")]
     pub final_v: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@fixed")]
     pub fixed: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@form")]
     pub form: Option<Form>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs", default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs", default = "default_min_occurs")]
     pub min_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "@nillable" ,default = "default_false")]
     pub nillable: bool,
 
-    #[yaserde(attribute = true, rename = "ref")]
+    #[serde(rename = "@ref")]
     pub ref_v: Option<String>,
 
-    #[yaserde(attribute = true, rename = "substitutionGroup")]
+    #[serde(rename = "@substitutionGroup")]
     pub substitution_group: Vec<String>,
 
-    #[yaserde(attribute = true, rename = "targetNamespace")]
+    #[serde(rename = "@targetNamespace")]
     pub target_namespace: Option<String>,
 
-    #[yaserde(attribute = true, rename = "type")]
+    #[serde(rename = "@type")]
     pub type_v: Option<QName<Types>>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
+    #[serde(flatten)]
     pub type_component: TypeComponent,
 
-    #[yaserde(rename = "alternative", prefix = "xs")]
+    #[serde(rename = "alternative")]
     pub alternatives: Vec<Alternative>,
 
-    #[yaserde(rename = "unique")]
+    #[serde(rename = "unique")]
     pub unique: Vec<Unique>,
 
-    #[yaserde(rename = "key")]
+    #[serde(rename = "key")]
     pub key: Vec<Key>,
 
-    #[yaserde(rename = "keyref")]
+    #[serde(rename = "keyref")]
     pub keyref: Vec<KeyRef>,
 }
 

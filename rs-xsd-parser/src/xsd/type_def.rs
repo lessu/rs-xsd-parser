@@ -1,6 +1,7 @@
 use crate::xsd::default_fn::*;
 
-use yaserde::*;
+use serde::Deserialize;
+use serde::*;
 use crate::xsd::{
     annotation::Annotation,
     sequence::{All, Choice, Sequence},
@@ -20,23 +21,19 @@ use super::{common_type::QName, types::Types};
  *     Content: (annotation?)
  * </selector>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "selector",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Selector {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "xpath")]
+    #[serde(rename = "@xpath")]
     pub xpath: String,
 
-    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
+    #[serde(rename = "@xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 /**
@@ -48,23 +45,19 @@ pub struct Selector {
  *     Content: (annotation?)
  * </field>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "field",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Field {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "xpath")]
+    #[serde(rename = "@xpath")]
     pub xpath: String,
 
-    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
+    #[serde(rename = "@xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
@@ -77,29 +70,25 @@ pub struct Field {
  *     Content: (annotation?, (selector, field+)?)
  * </unique>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "unique",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Unique {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@reference")]
     pub reference: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "selector", prefix = "xs")]
+    #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[yaserde(rename = "field", prefix = "xs")]
+    #[serde(rename = "field")]
     pub fields: Vec<Field>,
 }
 
@@ -113,29 +102,25 @@ pub struct Unique {
  * </key>
  */
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "key",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Key {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@reference")]
     pub reference: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "selector", prefix = "xs")]
+    #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[yaserde(rename = "field", prefix = "xs")]
+    #[serde(rename = "field")]
     pub fields: Vec<Field>,
 }
 
@@ -149,32 +134,28 @@ pub struct Key {
  *     Content: (annotation?, (selector, field+)?)
  * </keyref>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "keyref",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct KeyRef {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@name")]
     pub name: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@reference")]
     pub reference: Option<String>,
 
-    #[yaserde(attribute = true, rename = "refer")]
+    #[serde(rename = "@refer")]
     pub refer: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "selector", prefix = "xs")]
+    #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[yaserde(rename = "field", prefix = "xs")]
+    #[serde(rename = "field")]
     pub fields: Vec<Field>,
 }
 /**
@@ -187,29 +168,25 @@ pub struct KeyRef {
  *     Content: (annotation?, (simpleType | complexType)?)
  * </alternative>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "alternative",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Alternative {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@test")]
     pub test: Option<String>,
 
-    #[yaserde(attribute = true,rename = "type")]
+    #[serde(rename = "@type")]
     pub type_v: Option<QName<Types>>,
 
-    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
+    #[serde(rename = "@xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(flatten = true)]
+    #[serde(flatten)]
     pub type_component:TypeComponent
 }
 /**
@@ -221,338 +198,276 @@ pub struct Alternative {
  *     Content: (annotation?)
  * </assert>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "assert",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Assert {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@test")]
     pub test: Option<String>, // XPath
 
-    #[yaserde(attribute = true, rename = "xpathDefaultNamespace")]
+    #[serde(rename = "@xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Debug, Default, PartialEq, YaDeserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Form {
     #[default]
-    #[yaserde(rename = "qualified")]
     Qualified,
-    #[yaserde(rename = "unqualified")]
     Unqualified,
 }
 
-#[derive(Clone, Debug, Default, PartialEq, YaDeserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum ProcessContents {
-    #[yaserde(rename = "lax")]
     Lax,
-
-    #[yaserde(rename = "skip")]
     Skip,
-
     #[default]
-    #[yaserde(rename = "strict")]
     Strict,
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum ComplexChildren{
     #[default]
     None,
-
-    #[yaserde(rename = "group", prefix = "xs")]
     Group(Group),
-    
-    #[yaserde(rename = "all", prefix = "xs")]
     All(All),
-    
-    #[yaserde(rename = "choice", prefix = "xs")]
     Choice(Choice),
-
-    #[yaserde(rename = "sequence", prefix = "xs")]
     Sequence(Sequence)
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "minExclusive",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MinExclusive {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "@fixed",default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<f32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "minInclusive",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MinInclusive {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "@fixed",default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<f32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "maxExclusive",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MaxExclusive {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<f32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "maxInclusive",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MaxInclusive {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<f32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "totalDigits",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct TotalDigits {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<u32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "fractionDigits",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct FractionDigits {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<u32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "length",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct Length {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<u32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "minLength",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MinLength {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<u32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "maxLength",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct MaxLength {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<u32>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "enumeration",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct Enumeration {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "whiteSpace",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct WhiteSpace {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
     
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "pattern",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct Pattern {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "assertion",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct Assertion {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@test")]
     pub test: Option<String>, 
     
-    #[yaserde(attribute = true,rename="xpathDefaultNamespace")]
+    #[serde(rename = "@xpathDefaultNamespace")]
     pub xpath_default_namespace: Option<String>, 
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "explicitTimezone",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+
 pub struct ExplicitTimezone {
-    #[yaserde(attribute = true,default = "default_false")]
+    #[serde(rename = "fixed", default = "default_false")]
     pub fixed: bool,
     
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@value")]
     pub value: Option<String>,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 }

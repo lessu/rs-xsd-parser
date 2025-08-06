@@ -1,4 +1,5 @@
-use yaserde::*;
+use serde::Deserialize;
+
 use crate::xsd::{
   attribute,
   types,
@@ -8,43 +9,39 @@ use crate::xsd::{
   type_def::Form
 };
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-  rename="schema",
-  prefix="xs",
-  namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" },
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Schema {
-  #[yaserde(attribute = true)]
+  #[serde(rename = "@xmlns")]
   pub xmlns : Option<String>,
   
-  #[yaserde(rename = "targetNamespace", attribute = true)]
+  #[serde(rename = "@targetNamespace")]
   pub target_namespace: Option<String>,
 
-  #[yaserde(rename = "elementFormDefault", attribute = true)]
+  #[serde(rename = "@elementFormDefault")]
   pub element_form_default: Option<Form>,
 
-  #[yaserde(rename = "attributeFormDefault", attribute = true)]
+  #[serde(rename = "@attributeFormDefault")]
   pub attribute_form_default: Option<Form>,
 
-  #[yaserde(rename = "import", prefix="xs")]
+  #[serde(rename = "import")]
   pub imports: Vec<import::Import>,
 
-  #[yaserde(rename = "element", prefix="xs")]
+  #[serde(rename = "element")]
   pub elements: Vec<element::Element>,
 
-  #[yaserde(rename = "simpleType", prefix="xs")]
+  #[serde(rename = "simpleType")]
   pub simple_type: Vec<types::SimpleType>,
 
-  #[yaserde(rename = "complexType", prefix="xs")]
+  #[serde(rename = "complexType")]
   pub complex_type: Vec<types::ComplexType>,
 
-  #[yaserde(rename = "attribute", prefix="xs")]
+  #[serde(rename = "attribute")]
   pub attribute: Vec<attribute::Attribute>,
 
-  #[yaserde(rename = "attributeGroup", prefix="xs")]
+  #[serde(rename = "attributeGroup")]
   pub attribute_group: Vec<attribute::AttributeGroup>,
 
-  #[yaserde(rename = "group", prefix  = "xs")]
+  #[serde(rename = "group")]
   pub group: Vec<group::Group>,
 }

@@ -1,4 +1,4 @@
-use yaserde::*;
+use serde::Deserialize;
 
 /**
  * <annotation
@@ -7,23 +7,21 @@ use yaserde::*;
  *    Content: (appinfo | documentation)*
  * </annotation>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "annotation",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "snake_case" )]
 pub struct Annotation {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(rename = "appinfo", prefix = "xs" )]
-    pub appinfo: Vec<AppInfo>,
-
-    #[yaserde(rename = "documentation", prefix = "xs" )]
-    pub documentation: Vec<Documentation>,
+    #[serde(rename = "$value")]
+    pub content: Vec<AnnotationContent>,
 }
-
+#[derive(Debug, Deserialize, Clone)]
+#[serde( rename_all = "snake_case" )]
+pub enum AnnotationContent {
+    Appinfo(Appinfo),
+    Documentation(Documentation),
+}
 /**
  * <appinfo
  *  source = anyURI
@@ -31,17 +29,13 @@ pub struct Annotation {
  *    Content: ({any})*
  * </appinfo>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "appinfo",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
-pub struct AppInfo {
-    #[yaserde(attribute = true)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "snake_case" )]
+pub struct Appinfo {
+    #[serde(rename = "@source")]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(text = true)]
+    #[serde(rename = "$value")]
     pub text: String,
 }
 /**
@@ -52,19 +46,15 @@ pub struct AppInfo {
  *    Content: ({any})*
  * </documentation>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "documentation",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde( rename_all = "snake_case" )]
 pub struct Documentation {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@source")]
     pub source: Option<String>, // anyURI
 
-    #[yaserde(attribute = true, rename = "lang", prefix="xml")]
+    #[serde(rename = "@lang")]
     pub lang: Option<String>, // language
 
-    #[yaserde(text = true)]
+    #[serde(rename = "$value")]
     pub text: String,
 }

@@ -1,4 +1,5 @@
-use yaserde::*;
+use serde::Deserialize;
+
 use crate::xsd::default_fn::*;
 
 use crate::xsd::{
@@ -18,32 +19,28 @@ use crate::xsd::{
  *     Content: (annotation?, (element | any | group)*)
  * </all>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "all",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct All {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs", default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs", default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs", default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs", default = "default_min_occurs")]
     pub min_occurs: MaxOccurences,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element", prefix = "xs")]
+    #[serde(rename = "element")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "any", prefix = "xs")]
+    #[serde(rename = "any")]
     pub any: Vec<Any>,
 
-    #[yaserde(rename = "group", prefix = "xs")]
+    #[serde(rename = "group")]
     pub groups: Vec<Group>,
 }
 /**
@@ -55,38 +52,34 @@ pub struct All {
  *     Content: (annotation?, (element | group | choice | sequence | any)*)
  * </choice>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "choice",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Choice {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs",default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs",default = "default_min_occurs")]
     pub min_occurs: MaxOccurences,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element", prefix = "xs")]
+    #[serde(rename = "element")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "group", prefix = "xs")]
+    #[serde(rename = "group")]
     pub groups: Vec<Group>,
 
-    #[yaserde(rename = "choice", prefix = "xs")]
+    #[serde(rename = "choice")]
     pub choices: Vec<Choice>,
 
-    #[yaserde(rename = "sequence", prefix = "xs")]
+    #[serde(rename = "sequence")]
     pub sequences: Vec<Sequence>,
 
-    #[yaserde(rename = "any", prefix = "xs")]
+    #[serde(rename = "any")]
     pub any: Vec<Any>,
 }
 
@@ -99,37 +92,33 @@ pub struct Choice {
  *     Content: (annotation?, (element | group | choice | sequence | any)*)
  * </sequence>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
-#[yaserde(
-    rename = "sequence",
-    prefix = "xs",
-    namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
-)]
+#[derive(Clone, Default, Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct Sequence {
-    #[yaserde(attribute = true)]
+    #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[yaserde(attribute = true, rename = "maxOccurs",default = "default_max_occurs")]
+    #[serde(rename = "@maxOccurs",default = "default_max_occurs")]
     pub max_occurs: MaxOccurences,
 
-    #[yaserde(attribute = true, rename = "minOccurs",default = "default_min_occurs")]
+    #[serde(rename = "@minOccurs",default = "default_min_occurs")]
     pub min_occurs: MaxOccurences,
 
-    #[yaserde(rename = "annotation", prefix = "xs")]
+    #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[yaserde(rename = "element", prefix = "xs")]
+    #[serde(rename = "element")]
     pub elements: Vec<Element>,
 
-    #[yaserde(rename = "group", prefix = "xs")]
+    #[serde(rename = "group")]
     pub groups: Vec<Group>,
 
-    #[yaserde(rename = "choice", prefix = "xs")]
+    #[serde(rename = "choice")]
     pub choices: Vec<Choice>,
 
-    #[yaserde(rename = "sequence", prefix = "xs")]
+    #[serde(rename = "sequence")]
     pub sequences: Vec<Sequence>,
 
-    #[yaserde(rename = "any", prefix = "xs")]
+    #[serde(rename = "any")]
     pub any: Vec<Any>,
 }
