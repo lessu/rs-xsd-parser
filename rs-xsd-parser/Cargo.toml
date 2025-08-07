@@ -7,7 +7,6 @@ authors = ["Mingyi Li<lessu@163.com>"]
 [dependencies]
 log = "0.4"
 clap = { version = "4.0", features = ["derive"] }
-rs-xsd-parser-derive = { path ="../rs-xsd-parser-derive" }
 serde = { version = "1.0", features = ["derive", "rc"] }
 quick-xml = { version = "0.31.0", features = ["serialize","overlapped-lists"] }
 syn = "2.0.66"

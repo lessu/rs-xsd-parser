@@ -13,7 +13,7 @@ pub struct Annotation {
     #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[serde(rename = "$value")]
+    #[serde(rename = "$value", default)]
     pub content: Vec<AnnotationContent>,
 }
 #[derive(Debug, Deserialize, Clone)]

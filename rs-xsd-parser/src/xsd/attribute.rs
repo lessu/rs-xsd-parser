@@ -96,12 +96,13 @@ pub struct AttributeGroup {
     #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<RefAttributeGroup>,
-    #[serde(rename = "anyAttribute")]
+    
+    #[serde(rename = "anyAttribute", default)]
     pub any_attributes: Option<AnyAttribute>,
 }
 /**
@@ -150,10 +151,10 @@ pub struct AnyAttribute {
     #[serde(rename = "@namespace")]
     pub namespace: Option<String>,
 
-    #[serde(rename = "@notNamespace")]
+    #[serde(rename = "@notNamespace", default)]
     pub not_namespace: Vec<String>,
 
-    #[serde(rename = "@notQName")]
+    #[serde(rename = "@notQName", default)]
     pub not_qname: Vec<String>,
 
     #[serde(rename = "@processContents")]

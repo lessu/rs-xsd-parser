@@ -36,10 +36,10 @@ pub struct Any {
     #[serde(rename = "@namespace")]
     pub namespace: Option<String>,
 
-    #[serde(rename = "@notNamespace")]
+    #[serde(rename = "@notNamespace", default)]
     pub not_namespace: Vec<String>,
 
-    #[serde(rename = "@notQName")]
+    #[serde(rename = "@notQName", default)]
     pub not_qname: Vec<String>,
 
     #[serde(rename = "@processContents")]

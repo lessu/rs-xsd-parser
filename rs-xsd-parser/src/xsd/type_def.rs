@@ -88,7 +88,7 @@ pub struct Unique {
     #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[serde(rename = "field")]
+    #[serde(rename = "field", default)]
     pub fields: Vec<Field>,
 }
 
@@ -120,7 +120,7 @@ pub struct Key {
     #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[serde(rename = "field")]
+    #[serde(rename = "field", default)]
     pub fields: Vec<Field>,
 }
 
@@ -155,7 +155,7 @@ pub struct KeyRef {
     #[serde(rename = "selector")]
     pub selector: Option<Selector>,
 
-    #[serde(rename = "field")]
+    #[serde(rename = "field", default)]
     pub fields: Vec<Field>,
 }
 /**

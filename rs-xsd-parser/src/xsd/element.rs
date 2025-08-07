@@ -85,7 +85,7 @@ pub struct Element {
     #[serde(rename = "@ref")]
     pub ref_v: Option<String>,
 
-    #[serde(rename = "@substitutionGroup")]
+    #[serde(rename = "@substitutionGroup", default)]
     pub substitution_group: Vec<String>,
 
     #[serde(rename = "@targetNamespace")]
@@ -100,16 +100,16 @@ pub struct Element {
     #[serde(flatten)]
     pub type_component: TypeComponent,
 
-    #[serde(rename = "alternative")]
+    #[serde(rename = "alternative", default)]
     pub alternatives: Vec<Alternative>,
 
-    #[serde(rename = "unique")]
+    #[serde(rename = "unique", default)]
     pub unique: Vec<Unique>,
 
-    #[serde(rename = "key")]
+    #[serde(rename = "key", default)]
     pub key: Vec<Key>,
 
-    #[serde(rename = "keyref")]
+    #[serde(rename = "keyref", default)]
     pub keyref: Vec<KeyRef>,
 }
 

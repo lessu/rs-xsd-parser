@@ -34,13 +34,13 @@ pub struct All {
     #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "element")]
+    #[serde(rename = "element", default)]
     pub elements: Vec<Element>,
 
-    #[serde(rename = "any")]
+    #[serde(rename = "any", default)]
     pub any: Vec<Any>,
 
-    #[serde(rename = "group")]
+    #[serde(rename = "group", default)]
     pub groups: Vec<Group>,
 }
 /**
@@ -67,19 +67,19 @@ pub struct Choice {
     #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "element")]
+    #[serde(rename = "element", default)]
     pub elements: Vec<Element>,
 
-    #[serde(rename = "group")]
+    #[serde(rename = "group", default)]
     pub groups: Vec<Group>,
 
-    #[serde(rename = "choice")]
+    #[serde(rename = "choice", default)]
     pub choices: Vec<Choice>,
 
-    #[serde(rename = "sequence")]
+    #[serde(rename = "sequence", default)]
     pub sequences: Vec<Sequence>,
 
-    #[serde(rename = "any")]
+    #[serde(rename = "any", default)]
     pub any: Vec<Any>,
 }
 
@@ -107,18 +107,18 @@ pub struct Sequence {
     #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "element")]
+    #[serde(rename = "element", default)]
     pub elements: Vec<Element>,
 
-    #[serde(rename = "group")]
+    #[serde(rename = "group", default)]
     pub groups: Vec<Group>,
 
-    #[serde(rename = "choice")]
+    #[serde(rename = "choice", default)]
     pub choices: Vec<Choice>,
 
-    #[serde(rename = "sequence")]
+    #[serde(rename = "sequence", default)]
     pub sequences: Vec<Sequence>,
 
-    #[serde(rename = "any")]
+    #[serde(rename = "any", default)]
     pub any: Vec<Any>,
 }

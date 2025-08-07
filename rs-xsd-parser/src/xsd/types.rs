@@ -75,16 +75,16 @@ pub struct ComplexType {
     #[serde(flatten)]
     pub complex_children: ComplexChildren,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<RefAttributeGroup>,
 
     #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 
-    #[serde(rename = "assert")]
+    #[serde(rename = "assert", default)]
     pub assert: Vec<Assert>
 
 }
@@ -151,7 +151,7 @@ pub struct SimpleTypeRestriction {
     pub annotation: Option<Annotation>,
 
     // Use Vec to avoid nesting reference
-    #[serde(rename = "simpleType")]
+    #[serde(rename = "simpleType", default)]
     pub simple_type: Vec<SimpleType>,
 
     #[serde(rename = "minExclusive")]
@@ -181,19 +181,19 @@ pub struct SimpleTypeRestriction {
     #[serde(rename = "maxLength")]
     pub max_length: Option<MaxLength>,
 
-    #[serde(rename = "enumeration")]
+    #[serde(rename = "enumeration", default)]
     pub enumeration: Vec<Enumeration>,
 
-    #[serde(rename = "whiteSpace")]
+    #[serde(rename = "whiteSpace", default)]
     pub white_space: Vec<WhiteSpace>,
 
-    #[serde(rename = "pattern")]
+    #[serde(rename = "pattern", default)]
     pub pattern: Vec<Pattern>,
 
-    #[serde(rename = "assertion")]
+    #[serde(rename = "assertion", default)]
     pub assertion: Vec<Assertion>,
 
-    #[serde(rename = "explicitTimezone")]
+    #[serde(rename = "explicitTimezone", default)]
     pub explicit_timezone: Vec<ExplicitTimezone>,
 
 }
@@ -219,7 +219,7 @@ pub struct List {
     pub annotation: Option<Annotation>,
 
     // use Vec to avoid nesting reference
-    #[serde(rename = "simpleType")]
+    #[serde(rename = "simpleType", default)]
     pub simple_type: Vec<SimpleType>,
 }
 /**
@@ -236,13 +236,13 @@ pub struct Union {
     #[serde(rename = "@id")]
     pub id: Option<String>,
 
-    #[serde(rename = "@memberTypes")]
+    #[serde(rename = "@memberTypes", default)]
     pub member_types: Vec<String>, // List of QName
 
     #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "simpleType")]
+    #[serde(rename = "simpleType", default)]
     pub simple_types: Vec<SimpleType>,
 }
 

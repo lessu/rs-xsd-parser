@@ -41,7 +41,7 @@ pub struct Group {
     #[serde(rename = "annotation")]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "$value" )]
+    #[serde(rename = "$value")]
     pub componenet: GroupComponenet
 }
 

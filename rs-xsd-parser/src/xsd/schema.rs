@@ -24,24 +24,24 @@ pub struct Schema {
   #[serde(rename = "@attributeFormDefault")]
   pub attribute_form_default: Option<Form>,
 
-  #[serde(rename = "import")]
+  #[serde(rename = "import", default)]
   pub imports: Vec<import::Import>,
 
-  #[serde(rename = "element")]
+  #[serde(rename = "element", default)]
   pub elements: Vec<element::Element>,
 
-  #[serde(rename = "simpleType")]
+  #[serde(rename = "simpleType", default)]
   pub simple_type: Vec<types::SimpleType>,
 
-  #[serde(rename = "complexType")]
+  #[serde(rename = "complexType", default)]
   pub complex_type: Vec<types::ComplexType>,
 
-  #[serde(rename = "attribute")]
+  #[serde(rename = "attribute", default)]
   pub attribute: Vec<attribute::Attribute>,
 
-  #[serde(rename = "attributeGroup")]
+  #[serde(rename = "attributeGroup", default)]
   pub attribute_group: Vec<attribute::AttributeGroup>,
 
-  #[serde(rename = "group")]
+  #[serde(rename = "group", default)]
   pub group: Vec<group::Group>,
 }

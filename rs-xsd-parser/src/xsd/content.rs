@@ -68,16 +68,16 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[serde(flatten)]
     pub complex_children: ComplexChildren,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<AttributeGroup>,
 
     #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 
-    #[serde(rename = "assert")]
+    #[serde(rename = "assert", default)]
     pub  assert: Vec<Assert>,
  }
  
@@ -105,10 +105,10 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[serde(rename = "openContet")]
     pub open_context: Option<OpenContent>,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<AttributeGroup>,
 
     #[serde(rename = "anyAttribute")]
@@ -117,7 +117,7 @@ pub enum ComplexContextRestrictionOrExtrension {
     #[serde(flatten)]
     pub complex_children: ComplexChildren,
 
-    #[serde(rename = "assert")]
+    #[serde(rename = "assert", default)]
     pub assert: Vec<Assert>,
  }
 
@@ -201,28 +201,28 @@ pub struct SimpleContentRestriction {
     #[serde(rename = "maxLength")]
     pub max_length: Option<MaxLength>,
 
-    #[serde(rename = "enumeration")]
+    #[serde(rename = "enumeration", default)]
     pub enumeration: Vec<Enumeration>,
 
-    #[serde(rename = "whiteSpace")]
+    #[serde(rename = "whiteSpace", default)]
     pub white_space: Vec<WhiteSpace>,
 
-    #[serde(rename = "pattern")]
+    #[serde(rename = "pattern", default)]
     pub pattern: Vec<Pattern>,
 
-    #[serde(rename = "assertion")]
+    #[serde(rename = "assertion", default)]
     pub assertion: Vec<Assertion>,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<AttributeGroup>,
 
     #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 
-    #[serde(rename = "assert")]
+    #[serde(rename = "assert", default)]
     pub assert: Vec<Assert>,
 }
 
@@ -246,16 +246,16 @@ pub struct SimpleContentExtension{
     #[serde()]
     pub annotation: Option<Annotation>,
 
-    #[serde(rename = "attribute")]
+    #[serde(rename = "attribute", default)]
     pub attributes: Vec<Attribute>,
 
-    #[serde(rename = "attributeGroup")]
+    #[serde(rename = "attributeGroup", default)]
     pub attribute_groups: Vec<AttributeGroup>,
 
     #[serde(rename = "anyAttribute")]
     pub any_attributes: Option<AnyAttribute>,
 
-    #[serde(rename = "assert")]
+    #[serde(rename = "assert", default)]
     pub assert: Vec<Assert>,
 }
 
