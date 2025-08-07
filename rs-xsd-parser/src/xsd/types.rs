@@ -10,7 +10,7 @@ use super::atomic_type::BaseType;
 use super::attribute::{AnyAttribute, Attribute, RefAttributeGroup};
 use super::common_type::QName;
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -45,7 +45,7 @@ pub enum ComplexTypeContent{
  * Content means simpleContent | complexContent | openContent are optional, and only one will apear
  * if simpleContent or complexContent, then you can't add other content (like gourp, attribute, etc)
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "complexType",
     prefix = "xs",
@@ -96,7 +96,7 @@ pub struct ComplexType {
 
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -121,7 +121,7 @@ pub enum SimpleTypeComponenet {
  *    Content: (annotation?, (restriction | list | union))
  * </simpleType>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "simpleType",
     prefix = "xs",
@@ -152,7 +152,7 @@ pub struct SimpleType {
  *   Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | explicitTimezone | {any with namespace: ##other})*))
  * </restriction>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "restriction",
     prefix = "xs",
@@ -224,7 +224,7 @@ pub struct SimpleTypeRestriction {
  *    Content: (annotation?, simpleType?)
  *</list>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "list",
     prefix = "xs",
@@ -252,7 +252,7 @@ pub struct List {
  *    Content: (annotation?, simpleType*)
  *</union>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "union",
     prefix = "xs",
@@ -275,7 +275,7 @@ pub struct Union {
 
 
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug)]
 pub enum Types{
     None,
     Simple(SimpleType),

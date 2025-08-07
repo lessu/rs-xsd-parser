@@ -20,7 +20,7 @@ use crate::xsd::{
  *     Content: (annotation?)
  * </any>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "any",
     prefix = "xs",

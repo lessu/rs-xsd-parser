@@ -24,7 +24,7 @@ use super::{common_type::QName, types::Types};
  *    Content: (annotation?, simpleType?)
  *</attribute>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "attribute",
     prefix = "xs",
@@ -84,7 +84,7 @@ pub struct Attribute {
  *   Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?))
  * </attributeGroup>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "attributeGroup",
     prefix = "xs",
@@ -120,7 +120,7 @@ pub struct AttributeGroup {
  *   Content: (annotation?)
  * </attributeGroup>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "attributeGroup",
     prefix = "xs",
@@ -152,7 +152,7 @@ fn default_use() -> Use{
  *     Content: (annotation?)
  * </anyAttribute>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "anyAttribute",
     prefix = "xs",

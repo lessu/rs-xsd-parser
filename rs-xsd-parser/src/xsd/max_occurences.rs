@@ -28,12 +28,7 @@ impl YaDeserialize for MaxOccurences {
 
             match content {
                 XmlEvent::Characters(value) => {
-                    if value == "unbounded" {
-                        Ok(MaxOccurences::Unbounded)
-                    } else {
-                        let number = value.parse::<u32>().map_err(|e| e.to_string())?;
-                        Ok(MaxOccurences::Number { value: number })
-                    }
+                    MaxOccurences::from_str(&value)
                 }
                 _ => Err("bad content for Max Occurences field".to_string()),
             }
@@ -43,3 +38,13 @@ impl YaDeserialize for MaxOccurences {
     }
 }
 
+impl MaxOccurences {
+    pub fn from_str(value: &str) -> Result<Self, String> {
+        if value == "unbounded" {
+            Ok(MaxOccurences::Unbounded)
+        } else {
+            let number = value.parse::<u32>().map_err(|e| e.to_string())?;
+            Ok(MaxOccurences::Number { value: number })
+        }
+    }
+}

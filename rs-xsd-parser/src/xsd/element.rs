@@ -15,7 +15,7 @@ use crate::xsd::{
 use super::common_type::QName;
 use super::max_occurences::MaxOccurences;
 use super::types::Types;
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -53,7 +53,7 @@ pub enum TypeComponent{
  *    Content: (annotation?, ((simpleType | complexType)?, alternative*, (unique | key | keyref)*))
  * </element>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "element",
     prefix = "xs",

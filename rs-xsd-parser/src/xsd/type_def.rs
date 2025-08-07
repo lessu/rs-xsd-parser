@@ -20,7 +20,7 @@ use super::{common_type::QName, types::Types};
  *     Content: (annotation?)
  * </selector>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "selector",
     prefix = "xs",
@@ -48,7 +48,7 @@ pub struct Selector {
  *     Content: (annotation?)
  * </field>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "field",
     prefix = "xs",
@@ -77,7 +77,7 @@ pub struct Field {
  *     Content: (annotation?, (selector, field+)?)
  * </unique>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "unique",
     prefix = "xs",
@@ -113,7 +113,7 @@ pub struct Unique {
  * </key>
  */
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "key",
     prefix = "xs",
@@ -149,7 +149,7 @@ pub struct Key {
  *     Content: (annotation?, (selector, field+)?)
  * </keyref>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "keyref",
     prefix = "xs",
@@ -187,7 +187,7 @@ pub struct KeyRef {
  *     Content: (annotation?, (simpleType | complexType)?)
  * </alternative>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "alternative",
     prefix = "xs",
@@ -221,7 +221,7 @@ pub struct Alternative {
  *     Content: (annotation?)
  * </assert>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "assert",
     prefix = "xs",
@@ -264,7 +264,7 @@ pub enum ProcessContents {
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -287,7 +287,7 @@ pub enum ComplexChildren{
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "minExclusive",
     prefix = "xs",
@@ -306,7 +306,7 @@ pub struct MinExclusive {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "minInclusive",
     prefix = "xs",
@@ -325,7 +325,7 @@ pub struct MinInclusive {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "maxExclusive",
     prefix = "xs",
@@ -344,7 +344,7 @@ pub struct MaxExclusive {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "maxInclusive",
     prefix = "xs",
@@ -364,7 +364,7 @@ pub struct MaxInclusive {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "totalDigits",
     prefix = "xs",
@@ -384,7 +384,7 @@ pub struct TotalDigits {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "fractionDigits",
     prefix = "xs",
@@ -404,7 +404,7 @@ pub struct FractionDigits {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "length",
     prefix = "xs",
@@ -424,7 +424,7 @@ pub struct Length {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "minLength",
     prefix = "xs",
@@ -443,7 +443,7 @@ pub struct MinLength {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "maxLength",
     prefix = "xs",
@@ -463,7 +463,7 @@ pub struct MaxLength {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "enumeration",
     prefix = "xs",
@@ -480,7 +480,7 @@ pub struct Enumeration {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "whiteSpace",
     prefix = "xs",
@@ -499,7 +499,7 @@ pub struct WhiteSpace {
     #[yaserde(rename = "annotation", prefix = "xs")]
     pub annotation: Option<Annotation>,
 }
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "pattern",
     prefix = "xs",
@@ -516,7 +516,7 @@ pub struct Pattern {
     pub annotation: Option<Annotation>,
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "assertion",
     prefix = "xs",
@@ -537,7 +537,7 @@ pub struct Assertion {
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "explicitTimezone",
     prefix = "xs",

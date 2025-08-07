@@ -7,7 +7,7 @@ use yaserde::*;
  *    Content: (appinfo | documentation)*
  * </annotation>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "annotation",
     prefix = "xs",
@@ -31,7 +31,7 @@ pub struct Annotation {
  *    Content: ({any})*
  * </appinfo>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "appinfo",
     prefix = "xs",
@@ -52,7 +52,7 @@ pub struct AppInfo {
  *    Content: ({any})*
  * </documentation>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "documentation",
     prefix = "xs",

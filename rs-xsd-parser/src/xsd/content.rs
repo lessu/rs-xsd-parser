@@ -19,7 +19,7 @@ use super::{atomic_type::BaseType, attribute::{AnyAttribute, Attribute, Attribut
  *     Content: (annotation?, (restriction | extension))
  * </complexContent>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "complexContent",
     prefix = "xs",
@@ -41,7 +41,7 @@ pub struct ComplexContent {
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -63,7 +63,7 @@ pub enum ComplexContextRestrictionOrExtrension {
  * </restriction>
  */
 
- #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+ #[derive(Clone, Default, Debug, YaDeserialize)]
  #[yaserde(
      rename = "restriction",
      prefix = "xs",
@@ -107,7 +107,7 @@ pub enum ComplexContextRestrictionOrExtrension {
  * </extension>
  */
 
- #[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+ #[derive(Clone, Default, Debug, YaDeserialize)]
  #[yaserde(
      rename = "extension",
      prefix = "xs",
@@ -149,7 +149,7 @@ pub enum ComplexContextRestrictionOrExtrension {
  *     Content: (annotation?, (restriction | extension))
  * </simpleContent> 
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "simpleContent",
     prefix = "xs",
@@ -167,7 +167,7 @@ pub struct SimpleContent {
 }
 
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
@@ -189,7 +189,7 @@ pub enum SimpleContextRestrictionOrExtrension {
  *   Content: (annotation?, (simpleType?, (minExclusive | minInclusive | maxExclusive | maxInclusive | totalDigits | fractionDigits | length | minLength | maxLength | enumeration | whiteSpace | pattern | assertion | {any with namespace: ##other})*)?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
  * </restriction>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "restriction",
     prefix = "xs",
@@ -268,7 +268,7 @@ pub struct SimpleContentRestriction {
  *   Content: (annotation?, ((attribute | attributeGroup)*, anyAttribute?), assert*)
  * </extension>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "extension",
     prefix = "xs",
@@ -305,7 +305,7 @@ pub struct SimpleContentExtension{
  *     Content: (annotation?, any?)
  * </openContent>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "openContent",
     prefix = "xs",

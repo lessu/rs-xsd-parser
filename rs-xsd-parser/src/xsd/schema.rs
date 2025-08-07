@@ -8,7 +8,7 @@ use crate::xsd::{
   type_def::Form
 };
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
   rename="schema",
   prefix="xs",

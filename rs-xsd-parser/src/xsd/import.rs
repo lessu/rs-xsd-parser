@@ -10,7 +10,7 @@ use crate::xsd::annotation::Annotation;
  *    Content: (annotation?)
  * </import>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename="schema",
     prefix="xs",

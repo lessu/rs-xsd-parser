@@ -19,7 +19,7 @@ use super::{common_type::QName, max_occurences::MaxOccurences};
  *     Content: (annotation?, (all | choice | sequence)?)
  * </group>
  */
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     rename = "group",
     prefix = "xs",
@@ -48,7 +48,7 @@ pub struct Group {
     pub componenet: GroupComponenet
 }
 
-#[derive(Clone, Default, Debug, PartialEq, YaDeserialize)]
+#[derive(Clone, Default, Debug, YaDeserialize)]
 #[yaserde(
     prefix = "xs",
     namespaces = {"xs" = "http://www.w3.org/2001/XMLSchema" }
